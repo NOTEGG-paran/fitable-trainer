@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "685461016009",
+    "project_id": "fitable-fb2b9",
+    "storage_bucket": "fitable-fb2b9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:685461016009:android:8d1e09202851d0ae31ec18",
+        "android_client_info": {
+          "package_name": "com.fitableclient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "685461016009-6bvaem4ov8t6734u3q7mafotf36otkf7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJ-qHZeWs7yOzei21hzaNw7n0XZx1MmNg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "685461016009-6bvaem4ov8t6734u3q7mafotf36otkf7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:685461016009:android:81a60b98eb89fec131ec18",
+        "android_client_info": {
+          "package_name": "com.fitabletrainer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "685461016009-6bvaem4ov8t6734u3q7mafotf36otkf7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJ-qHZeWs7yOzei21hzaNw7n0XZx1MmNg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "685461016009-6bvaem4ov8t6734u3q7mafotf36otkf7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
