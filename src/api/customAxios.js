@@ -10,7 +10,7 @@ const customAxios = axios.create({
     'content-type': 'application/json',
   },
 });
-
+console.log('Config.API_URL',Config.API_URL)
 // 요청 인터셉터
 customAxios.interceptors.request.use(async (config) => {
     const token = await AsyncStorage.getItem("accessToken");

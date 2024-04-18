@@ -8,18 +8,20 @@ import FastImage from 'react-native-fast-image';
 function AlarmLessonListGrid({lessonList}) {
 
     const navigation = useNavigation();
-  console.log('lessonList',lessonList)
+  // console.log('lessonList',lessonList[0].alarms)
     const detailLessonScreen = async(id) => {
-        // console.log('상세 id확인',id)
-        try{
-            const response = await getLessonDetail(id);
-            console.log('상세 응답',response)
-            if(response){
-                navigation.navigate('LessonDetail', {lessonDetail: response});
-            }
-        }catch(error){
-            console.log('error 뜸 ㅠㅠ123', error)
-        }
+        console.log('상세 id확인',id)
+  
+          try{
+                const response = await getLessonDetail(id);
+                console.log('상세 응답',response)
+                if(response){
+                      navigation.navigate('LessonDetail', {lessonDetail: response});
+                  }
+              }catch(error){
+                    console.log('error 뜸 ㅠㅠ123', error)
+                }
+              
     }
 
     const personal = require('../../assets/img/alarmoneperson.png');

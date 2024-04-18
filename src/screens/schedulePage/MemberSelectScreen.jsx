@@ -19,7 +19,6 @@ function MemberSelectScreen(props) {
         navigation.goBack();
     }
 
-    console.log('dfsdafsdf PERSONAL',routerType)
 
     const reservationBtn = async(lessonId,memberTicketId) => {
         if(routerType ==='ableclass'){

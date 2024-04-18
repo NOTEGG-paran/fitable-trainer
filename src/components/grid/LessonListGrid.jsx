@@ -23,7 +23,7 @@ function LessonListGrid({lessonList}) {
             console.log('error 뜸', error)
         }
     }
-
+    console.log('lessonList',lessonList)
     const nextIcon = require('../../assets/img/rightIcon.png');
     const personal = require('../../assets/img/personal_s.png');
     const group = require('../../assets/img/group_s.png');
@@ -56,7 +56,7 @@ function LessonListGrid({lessonList}) {
                                     ):(
                                         <MembersInfoContainer>
                                             {
-                                                lesson.reservationMembers.memberName === null ? (
+                                                lesson.reservationMembers.memberName === null || lesson.reservationMembers.memberName === '' ? (
                                                     <MembersInfoText>알 수 없음 회원</MembersInfoText>
                                                 ):(
                                                     <MembersInfoText>{lesson.reservationMembers.memberName} 회원</MembersInfoText>
@@ -70,7 +70,7 @@ function LessonListGrid({lessonList}) {
                                             )
                                         }
                                         {
-                                            lesson.location === null ? (
+                                            lesson.location === null || lesson.location === ''? (
                                                 null
                                             ):(
                                                 <MembersInfoText> | {lesson.location}</MembersInfoText>

@@ -10,4 +10,6 @@ export const COLORS = {
     gray_400:'#707070',
     gray_500:'#535258',
     white: '#ffffff',
+    sky:'#4EC6E5',
+    red:'#FF7878',
   };

@@ -9,7 +9,7 @@ function DetailLessonCommonGrid({lessonDetail,routerType}) {
 
     // console.log('routerTyperouterType',routerType,lessonDetail)
 
-
+console.log('lessonDetaillessonDetaillessonDetaillessonDetail',lessonDetail)
 
     const selectMemberScreen = async(id) => {
             try{
@@ -26,15 +26,14 @@ function DetailLessonCommonGrid({lessonDetail,routerType}) {
 
     const memberDetailScreen = async(id) => {
 
-        try{
-            const response = await getLessonMemberDetail(id);
-
-            navigation.navigate('ClassMemberDetail',{
-                detailData: response,
-                screenType: 'class',
-            })
-        }catch(error){
-            console.log('error 뜸 ㅠ3123123ㅠ', error)
+            try{
+                const response = await getLessonMemberDetail(id);
+                navigation.navigate('ClassMemberDetail',{
+                    detailData: response,
+                    screenType: 'class',
+                })
+            }catch(error){
+                console.log('error 뜸 ㅠ3123123ㅠ', error)
         }
 
     }
@@ -64,10 +63,16 @@ function DetailLessonCommonGrid({lessonDetail,routerType}) {
                     <DetailContentText>{lessonDetail.startTime} ~ {lessonDetail.endTime} </DetailContentText>
                     </DetailContent>
 
-                    <DetailContent>
-                    <DetailContentTitle>장소</DetailContentTitle>
-                    <DetailContentText>{lessonDetail.location}</DetailContentText>
-                    </DetailContent>
+                    {
+                        lessonDetail.location ? (
+                            <DetailContent>
+                            <DetailContentTitle>장소</DetailContentTitle>
+                            <DetailContentText>{lessonDetail.location}</DetailContentText>
+                            </DetailContent> 
+                        ): null
+                    }
+                       
+
                 </DetailContentContainer>
 
          <ReservationInfoContainer>
