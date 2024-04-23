@@ -93,3 +93,13 @@ export const postLessonAttendance = async (id) => {
         throw error.response.data;
     }
 }
+
+// 수업 결석 처리
+export const postLessonAbsent = async (id) => {
+    try {
+        const response = await customAxios.post(`/api/trainers/v1/lessons/absent`, {id});
+        return response.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+}

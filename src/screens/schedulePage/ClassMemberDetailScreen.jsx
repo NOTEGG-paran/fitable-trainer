@@ -199,7 +199,7 @@ function ClassMemberDetailScreen(props) {
           )}
         </TicketContainer>
 
-        {screenType !== 'memberDetail' && (
+        {/* {screenType !== 'memberDetail' && (
           <BtnContainer>
             {detailData?.isAvailableCancel && (
               <MemberBtn
@@ -216,7 +216,7 @@ function ClassMemberDetailScreen(props) {
               </MemberBtn>
             )}
           </BtnContainer>
-        )}
+        )} */}
 
         {screenType === 'memberDetail' && (
           <PayAndContractContainer>

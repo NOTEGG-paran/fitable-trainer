@@ -9,14 +9,15 @@ function LessonListGrid({lessonList}) {
     const navigation = useNavigation();
 
     const detailLessonScreen = async(id) => {
+        console.log('dididid',id)
         try{
             const response = await getLessonDetail(id);
             // console.log('상세 응답',response)
             if(response){
                 navigation.navigate('LessonDetail', 
                 {
-                    lessonDetail: response,
-                    
+                    lessonDetailData: response,
+                    lessonId:id,
                 });
             }
         }catch(error){
