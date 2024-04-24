@@ -22,9 +22,18 @@ export const getLessonCalendar = async ({id, year, month}) => {
 }
 
 // 일별 수업 목록 조회
+// 나중에 최적화하면서 무한스크롤 로직으로 변경해야함
+// export const getLessonList = async (id, date,currentPage) => {
+//     try {
+//         const response = await customAxios.get(`/api/trainers/v1/centers/${id}/lessons/date/${date}?page=${currentPage}&size=10`);
+//         return response.data;
+//     } catch (error) {
+//         throw error.response.data;
+//     }
+// }
 export const getLessonList = async (id, date) => {
     try {
-        const response = await customAxios.get(`/api/trainers/v1/centers/${id}/lessons/date/${date}`);
+        const response = await customAxios.get(`/api/trainers/v1/centers/${id}/lessons/date/${date}?page=0&size=100`);
         return response.data;
     } catch (error) {
         throw error.response.data;
@@ -54,9 +63,9 @@ export const getLessonMemberDetail = async (id) => {
 
 
 // 예약 가능한 회원 조회
-export const getLessonReservationMembers = async (id) => {
+export const getLessonReservationMembers = async (id,page,size) => {
     try {
-        const response = await customAxios.get(`/api/trainers/v1/lessons/${id}/members/reservation/valid`);
+        const response = await customAxios.get(`/api/trainers/v1/lessons/${id}/members/reservation/valid?page=${page}&size=${size}`);
         return response.data;
     } catch (error) {
         throw error.response.data;

@@ -85,7 +85,6 @@ export default MemberPhoneInfo;
 const InfoTitleText = styled.Text`
 color: ${COLORS.gray_400};
  font-size: 14px;
- font-family: Pretendard;
  font-weight: 500;
  line-height: 22.40px;
  margin-bottom: 8px;

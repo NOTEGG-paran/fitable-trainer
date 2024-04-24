@@ -138,7 +138,6 @@ const SelectBox = styled.TouchableOpacity`
 const DividerText = styled.Text`
 font-size: 20px;
 color: ${COLORS.gray_200};
-font-family: Pretendard;
 font-weight: 600;
 line-height: 28px;
 /* margin: 0 8px; */

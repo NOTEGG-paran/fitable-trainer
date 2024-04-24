@@ -212,7 +212,7 @@ const HeaderContainer = styled.View`
 `
 
 const RegisterBtn = styled.TouchableOpacity`
- 
+ padding: 20px 10px 20px 30px;
 `
 
 const ScrollViewContainer = styled.ScrollView`

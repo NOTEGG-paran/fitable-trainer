@@ -123,7 +123,7 @@ border-radius: 13px;
 border: 1px solid ${COLORS.gray_200};
 background: ${COLORS.white};
 padding: 16px 16px 80px 16px;
-margin-bottom: 90px;
+margin-bottom: 20px;
 `
 
 const ProfileContentContainer = styled.View`
@@ -132,7 +132,7 @@ border-radius: 13px;
 border: 1px solid ${COLORS.gray_200};
 background: ${COLORS.white};
 padding: 16px;
-margin-bottom: 60px;
+margin-bottom: 20px;
 `
 
 const ProfileContentText = styled.Text`
@@ -141,6 +141,7 @@ font-size: 14px;
 font-weight: 400;
 line-height: 22.4px;
 letter-spacing: -0.35px;
+margin-top: 20px;
 `
 
 const ProfileCenterContainer = styled.View`

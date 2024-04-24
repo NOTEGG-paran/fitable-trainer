@@ -9,15 +9,18 @@ function DetailLessonCommonGrid({lessonDetail,routerType}) {
 
     // console.log('routerTyperouterType',routerType,lessonDetail)
 
-console.log('lessonDetaillessonDetaillessonDetaillessonDetail',lessonDetail)
+// console.log('lessonDetaillessonDetaillessonDetaillessonDetail',lessonDetail)
 
     const selectMemberScreen = async(id) => {
+        console.log('lssoid',id)
             try{
-                const response = await getLessonReservationMembers(id);
+                const response = await getLessonReservationMembers(id,0,10);
                 // console.log('회원 선택 응답',response)
                 navigation.navigate('MemberSelect',{
                     selectData: response.content,
                     lessonId: id,
+                    nextPage: 1, 
+                    hasMore: response.content.length === 10
                 })
             }catch{
                 console.log('5err', error)

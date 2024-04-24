@@ -24,7 +24,7 @@ export const getMemberConditions = async (id) => {
 // 즐겨찾는 이용권 목록 조회
 export const getBookmarkTickets = async (id) => {
     try {
-        const response = await customAxios.get(`/api/trainers/v1/centers/${id}/tickets/bookmark`);
+        const response = await customAxios.get(`/api/trainers/v1/centers/${id}/tickets/bookmark?page=0&size=70`);
         return response.data;
     } catch (error) {
         throw error.response.data;

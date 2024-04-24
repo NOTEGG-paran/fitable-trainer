@@ -224,7 +224,6 @@ const DayLabel = styled.Text`
 const DividerText = styled.Text`
 font-size: 16px;
 color: ${COLORS.sub};
-font-family: Pretendard;
 font-weight: 600;
 line-height: 28px;
 /* margin: 0 8px; */

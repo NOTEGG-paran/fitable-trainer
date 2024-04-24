@@ -8,26 +8,91 @@ import { useRoute } from '@react-navigation/native';
 import { FlatList,Alert } from 'react-native';
 import {formatPhoneNumber} from '../../utils/CustomUtils';
 import {postLessonReservation} from '../../api/lessonApi';
-import { useState } from 'react';
+import {getAssignableMembers} from '../../api/classApi';
+import { useState,useEffect } from 'react';
 import FastImage from 'react-native-fast-image';
+import {getLessonReservationMembers} from'../../api/lessonApi';
 function MemberSelectScreen(props) {
     const route = useRoute();
-    const { selectData, routerType, lessonId } = route.params;
+    const { selectData, routerType, lessonId, nextPage, hasMore,abprops  } = route.params;
+    console.log('routerType, lessonId, nextPage, hasMore ',routerType, lessonId, nextPage, hasMore,abprops )
     const navigation = useNavigation();
     const [selectedMember, setSelectedMember] = useState(null);
+    const [isProcessing, setIsProcessing] = useState(false);
+    const [members, setMembers] = useState(selectData || []);
+    const [page, setPage] = useState(nextPage || 0);
+    const [hasMorePages, setHasMorePages] = useState(hasMore || false);
+
     const goBack = () => {
         navigation.goBack();
     }
 
+    useEffect(() => {
+        if(routerType ==='ableclass'){
+            classMembers();
+        }else{
+            loadMembers();
+        }
+    }, [routerType, classMembers, loadMembers]);
+
+    const classMembers = async () => {
+        if (!hasMore) return;
+        try {
+            const { id, date, startTime, endTime } = abprops;
+            const response = await getAssignableMembers({id, date, startTime, endTime ,page,size:10});
+            console.log('나호출123123 ??!',page)
+            if (response.content.length < 10) {
+                setHasMorePages(false); // 데이터가 10개 미만이면 마지막 페이지로 간주
+            }
+            setMembers(prev => {
+                const updatedMembers = [...prev, ...response.content];
+                const uniqueMembers = Array.from(new Set(updatedMembers.map(a => a.memberTicketId)))
+                    .map(id => {
+                        return updatedMembers.find(a => a.memberTicketId === id)
+                    });
+                return uniqueMembers;
+            });
+            setPage(page + 1);
+        } catch (error) {
+            // console.error('Failed to fetch members:', error);
+        }
+    };
+console.log('vpdlwl',page)
+
+    const loadMembers = async () => {
+        if (!hasMore) return;
+        try {
+            const response = await getLessonReservationMembers(lessonId, page, 10);
+            console.log('나호출 ??!')
+            if (response.content.length < 10) {
+                setHasMorePages(false); // 데이터가 10개 미만이면 마지막 페이지로 간주
+            }
+            setMembers(prev => {
+                const updatedMembers = [...prev, ...response.content];
+                const uniqueMembers = Array.from(new Set(updatedMembers.map(a => a.memberTicketId)))
+                    .map(id => {
+                        return updatedMembers.find(a => a.memberTicketId === id)
+                    });
+                return uniqueMembers;
+            });
+            setPage(page + 1);
+        } catch (error) {
+            console.error('Failed to fetch members:', error);
+        }
+    };
 
     const reservationBtn = async(lessonId,memberTicketId) => {
+        if (isProcessing) return;
+        setIsProcessing(true);
         if(routerType ==='ableclass'){
             console.log('callll123123')
             const selected = selectData.find(member => member.memberTicketId === memberTicketId);
             setSelectedMember(selected);
             navigation.navigate('CreateClass', { selectedMember: selected, type:'PERSONAL' });
+            setIsProcessing(false);
         }else if(routerType ==='class'){
             console.log('callll')
+            setIsProcessing(false);
         }else{
             console.log('id값확인',memberTicketId,lessonId)
             try{
@@ -61,6 +126,8 @@ function MemberSelectScreen(props) {
                         ]
                       );
                 }
+            } finally {
+                setIsProcessing(false);
             }
         }
     }
@@ -79,8 +146,14 @@ function MemberSelectScreen(props) {
                     <>
                     <TitleText>회원 목록</TitleText>
                     <FlatList 
-                    data={selectData}
-                    keyExtractor={item => item.memberTicketId}
+                    data={members}
+                    // keyExtractor={item => item.memberTicketId}
+                    keyExtractor={item => item.memberTicketId.toString()}
+                    showsVerticalScrollIndicator={false}
+                    showsHorizontalScrollIndicator={false}
+                    bounces={false}
+                    onEndReached={loadMembers}
+                    onEndReachedThreshold={0.5} 
                     renderItem={({ item }) => (
                         <MemberItem onPress={()=>reservationBtn(lessonId, item.memberTicketId)}>
                             <ContentContainer>

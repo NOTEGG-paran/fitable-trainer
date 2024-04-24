@@ -108,6 +108,7 @@ function MemberRegisterGrid({memberInfo,type,name, setName,selectedGender,
                 </AddbtnBox>
             </AddBtnContainer>
             {
+                modalVisible &&
             <BookmarkTicketModal 
             modalVisible={modalVisible}
             closeModal={closeModal}

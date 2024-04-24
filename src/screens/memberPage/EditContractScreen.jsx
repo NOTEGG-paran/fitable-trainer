@@ -105,7 +105,7 @@ function EditContractScreen(props) {
 
                     <DateContainer>
                       <TextInput
-                        style={{width: 87}}
+                        style={{width: 87, paddingVertical: 20}}
                         placeholder="0000.00.00"
                         value={updatedContractTicket[index]?.startDate}
                         onChangeText={text => {

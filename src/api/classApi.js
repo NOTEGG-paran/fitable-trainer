@@ -41,9 +41,9 @@ export const registerClass = async (data) => {
 }
 
 // 회원 배정 가능한 회원 조회
-export const getAssignableMembers = async ({id, date, startTime, endTime}) => {
+export const getAssignableMembers = async ({id, date, startTime, endTime,page,size}) => {
     try {
-        const response = await customAxios.get(`/api/trainers/v1/lessons/members/assignment/valid/center/${id}/date/${date}/startTime/${startTime}/endTime/${endTime}`);
+        const response = await customAxios.get(`/api/trainers/v1/lessons/members/assignment/valid/center/${id}/date/${date}/startTime/${startTime}/endTime/${endTime}?page=${page}&size=${size}`);
         return response.data;
     } catch (error) {
         throw error;

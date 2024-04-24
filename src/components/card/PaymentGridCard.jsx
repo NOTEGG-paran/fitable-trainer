@@ -349,7 +349,6 @@ margin-bottom: ${props => props.isFocused && Platform.OS ==='android' ? '120px' 
 const InfoTitleText = styled.Text`
 color: ${COLORS.gray_400};
  font-size: 14px;
- font-family: Pretendard;
  font-weight: 500;
  line-height: 22px;
  margin-bottom: 8px;

@@ -1,6 +1,6 @@
 import { styled } from 'styled-components/native';
 import { COLORS } from '../../constants/color';
-import { Modal, ScrollView,Keyboard,TouchableWithoutFeedback,KeyboardAvoidingView, Platform } from 'react-native';
+import { Modal, ScrollView,Keyboard,TouchableWithoutFeedback,KeyboardAvoidingView, Platform,Alert } from 'react-native';
 import FastImage from 'react-native-fast-image';
 function BookmarkTicketModal({modalVisible, closeModal,type,bookmarkTickets,
     selectedTicket, setSelectedTicket,addTicket,selectTicketId, setSelectTicketId,openBookmarkTicketModal}) {
@@ -15,7 +15,7 @@ function BookmarkTicketModal({modalVisible, closeModal,type,bookmarkTickets,
 
     const applyTicket = () => {
         if (!selectedTicket) {
-            alert('티켓을 선택해주세요.');
+          Alert.alert('티켓을 선택해주세요.');
             return;
         }
         // 선택한 값들 저장
@@ -166,6 +166,7 @@ color: ${COLORS.gray_400};
 
 
 const ModalHdButton = styled.TouchableOpacity`
+padding: 24px 8px;
 `;
 
 const ModalIcons = styled(FastImage)`

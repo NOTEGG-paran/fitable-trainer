@@ -469,11 +469,14 @@ if (isInvalidSchedule) {
             Alert.alert('날짜와 시간을 선택해주세요');
         }
             try{
-                const response = await getAssignableMembers({id, date, startTime, endTime});
-                console.log('회원 선택 응답',response)
+                const response = await getAssignableMembers({id, date, startTime, endTime,},0,10);
+                console.log('최초 회원 선택 응답')
                 navigation.navigate('MemberSelect',{
                     selectData: response.content,
                     routerType:'ableclass',
+                    nextPage: 1, 
+                    hasMore: response.content.length === 10,
+                    abprops:{id, date, startTime, endTime}
                 })
             }catch(error){
                 console.log('123err', error)

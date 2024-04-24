@@ -1,10 +1,10 @@
 import styled from 'styled-components/native';
 import { COLORS } from '../../constants/color';
-import { ScrollView } from 'react-native';
+import { ScrollView,FlatList } from 'react-native';
 import {getLessonDetail} from '../../api/lessonApi'
 import { useNavigation } from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
-function LessonListGrid({lessonList}) {
+function LessonListGrid({lessonList,loadMore}) {
 
     const navigation = useNavigation();
 
@@ -27,6 +27,42 @@ function LessonListGrid({lessonList}) {
     const nextIcon = require('../../assets/img/rightIcon.png');
     const personal = require('../../assets/img/personal_s.png');
     const group = require('../../assets/img/group_s.png');
+
+
+    const renderItem = ({ item }) => (
+        <LessonListContainer>
+        <LessonCard onPress={() => detailLessonScreen(item.id)}>
+            <LessonIcon source={item.type === 'PERSONAL' ? personal : group} />
+            <InnerLessonCard>
+                <LessonInfo>
+                    <LessonNameAndTrainer>{item.name} • {item.trainers.join(', ')} 강사</LessonNameAndTrainer>
+                    <LessonTime>{item.startTime} ~ {item.endTime}</LessonTime>
+                    <MembersInfoContainer>
+                        <MembersInfoText>{item.reservationMembers.memberName || '알 수 없음 회원'} 회원</MembersInfoText>
+                        {item.reservationMembers.max && (
+                            <MembersInfoText>({item.reservationMembers.current}/{item.reservationMembers.max})</MembersInfoText>
+                        )}
+                        {item.location && (<MembersInfoText> | {item.location}</MembersInfoText>)}
+                    </MembersInfoContainer>
+                </LessonInfo>
+                <LessonNextIcon source={nextIcon} />
+            </InnerLessonCard>
+        </LessonCard>
+        </LessonListContainer>
+    );
+
+
+
+    // return (
+    //     <FlatList
+    //         data={lessonList}
+    //         renderItem={renderItem}
+    //         keyExtractor={item => item.id.toString()}
+    //         showsVerticalScrollIndicator={false}
+    //         // onEndReached={loadMore}
+    //         // onEndReachedThreshold={0.1}
+    //     />
+    // );
     return (
       <>
             {
@@ -35,59 +71,15 @@ function LessonListGrid({lessonList}) {
                     <NoListText>일정이 없습니다</NoListText>
                 </NoListContainer>
                 ):(
-                    <ScrollView
+                    <FlatList
+                    data={lessonList}
                     showsVerticalScrollIndicator={false}
                     showsHorizontalScrollIndicator={false}
                     bounces={false}
+                    renderItem={renderItem}
+                    keyExtractor={item => item.id.toString()}
                     overScrollMode="never">
-                    <LessonListContainer>
-                    {
-                        lessonList.map((lesson, index) => (
-                            <LessonCard key={lesson.id} onPress={()=>detailLessonScreen(lesson.id)}>
-                                <LessonIcon source={lesson.type === 'PERSONAL' ? personal : group}/>
-                                
-                                <InnerLessonCard>
-                                <LessonInfo> 
-                                <LessonNameAndTrainer>{lesson.name} • {lesson.trainers.join(', ')} 강사</LessonNameAndTrainer>
-                                <LessonTime>{lesson.startTime} ~ {lesson.endTime}</LessonTime>
-                                {
-                                    lesson.reservationMembers.memberName === null && lesson.reservationMembers.current === 0 ? (
-                                        <MembersInfoText>아직 예약한 회원이 없습니다</MembersInfoText>
-                                    ):(
-                                        <MembersInfoContainer>
-                                            {
-                                                lesson.reservationMembers.memberName === null || lesson.reservationMembers.memberName === '' ? (
-                                                    <MembersInfoText>알 수 없음 회원</MembersInfoText>
-                                                ):(
-                                                    <MembersInfoText>{lesson.reservationMembers.memberName} 회원</MembersInfoText>
-                                                )
-                                            }
-                                        {
-                                            lesson.reservationMembers.max && (
-                                                <MembersInfoText>
-                                                ({lesson.reservationMembers.current}/{lesson.reservationMembers.max})
-                                                </MembersInfoText>
-                                            )
-                                        }
-                                        {
-                                            lesson.location === null || lesson.location === ''? (
-                                                null
-                                            ):(
-                                                <MembersInfoText> | {lesson.location}</MembersInfoText>
-                                            )
-                                        }
-                                        </MembersInfoContainer>
-                                    )
-                                }
-                                </LessonInfo>
-
-                                <LessonNextIcon source={nextIcon}/>
-                                </InnerLessonCard>
-                            </LessonCard>
-                        ))
-                    }
-                </LessonListContainer>
-                </ScrollView>
+                </FlatList>
                 )
             }
        </>
