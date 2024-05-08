@@ -23,7 +23,8 @@ function MySettingListBtnGrid({children, text, onPress,isOnPushAlarm}) {
             text === 'version' ? 
             <SettingList>
                     <SettingListText>{children}</SettingListText>
-                    <VersionText>{version}</VersionText>
+                    {/* <VersionText>{version}</VersionText> */}
+                    <VersionText>1.0.5</VersionText>
                 </SettingList>
             :
             <SettingListBtn onPress={onPress}>

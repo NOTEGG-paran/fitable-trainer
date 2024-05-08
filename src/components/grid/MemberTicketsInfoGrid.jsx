@@ -9,8 +9,8 @@ function MemberTicketsInfoGrid({type,ticket,bookmarkTickets,memberId,formData,
   setSelectedTicket,setFormData,selectedTicket,index,selectTicketId,setSelectTicketId}) {
 
     const [timeAndPeriod, setTimeAndPeriod] = useState([]);
-
-  // console.log('timeAndPeriod[index]', timeAndPeriod[0]?.price)
+    const [priceIndex, setPriceIndex]= useState('')
+ 
     return (
         <>
           <SelectedTicketContainer>
@@ -24,6 +24,7 @@ function MemberTicketsInfoGrid({type,ticket,bookmarkTickets,memberId,formData,
                 setSelectTicketId={setSelectTicketId}
                 timeAndPeriod={timeAndPeriod}
                 setTimeAndPeriod={setTimeAndPeriod}
+                setPriceIndex={setPriceIndex}
                />
                 </SelectedTicketContainer>
 
@@ -41,7 +42,7 @@ function MemberTicketsInfoGrid({type,ticket,bookmarkTickets,memberId,formData,
                 setFormData={setFormData}
                 type={type}
                 formData={formData}
-                timeAndPeriod={timeAndPeriod[0]?.price}
+                timeAndPeriod={timeAndPeriod[priceIndex]?.price}
                 />
                 <GridLineGrayOne/>
         </>

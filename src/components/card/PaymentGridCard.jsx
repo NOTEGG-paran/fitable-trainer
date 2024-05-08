@@ -14,7 +14,7 @@ function PaymentGridCard({setFormData,type,index,timeAndPeriod,memberId,formData
     const [timeAndPeriodStr, setTimeAndPeriodStr] = useState(String(timeAndPeriod));
     const [centerId, setCenterId] = useRecoilState(centerIdState);
     const [couponList, setCouponList] = useState([]);
-
+    console.log('timeAndPeriodStr',timeAndPeriodStr)
     const [isFocused, setIsFocused] = useState(false);
     const handleFocus = () => setIsFocused(true);
     const handleBlur = () => setIsFocused(false);

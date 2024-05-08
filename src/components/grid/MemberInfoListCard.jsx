@@ -8,9 +8,10 @@ function MemberInfoListCard({ userList, type }) {
         <ListContainer>
             <FlatList
                 data={userList}
-                renderItem={({ item }) => <MemberInfoCard userInfo={item} type={type} />}
+                renderItem={({ item,index }) => <MemberInfoCard userInfo={item} type={type} index={index} />}
                 keyExtractor={item => item.id.toString()}
                 showsVerticalScrollIndicator={false}
+                bounces={false}
             />
         </ListContainer>
     );

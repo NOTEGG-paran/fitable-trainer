@@ -99,12 +99,30 @@ function RegisterMemberScreen(props) {
                 centerId
             }
             // console.log('data',data,formData)
-             if (formData.tickets.length > 0) {
-                // console.log('저는 값이있어요',formData.tickets.length)
-                await postRegisterMemberApi(formData);
-                memberDetailScreen(centerId, memberId);
+            if (formData.tickets.length > 0) {
+                console.log('저는 값이있어요', formData.tickets.length);
+                const allTicketsValid = formData.tickets.every(ticket => 
+                    ticket.paymentType !== null && 
+                    ticket.receivedPrice > 0 && 
+                    ticket.salePrice > 0
+                );
+            
+                if (!allTicketsValid) {
+                    formData.tickets.forEach(ticket => {
+                        if (ticket.paymentType === null) {
+                            Alert.alert("오류", "결제수단을 선택해주세요");
+                        } else if (ticket.receivedPrice === 0) {
+                            Alert.alert("오류", "받은금액을 입력해주세요");
+                        } else if (ticket.salePrice === 0) {
+                            Alert.alert("오류", "판매금액을 입력해주세요");
+                        }
+                    });
+                }else{
+                    await postRegisterMemberApi(formData);
+                    memberDetailScreen(centerId, memberId);
+                }
              }else{
-                // console.log('저는 값이 없어요',formData.tickets.length)
+                console.log('저는 값이 없어요',formData.tickets.length)
                 await postRegisterMemberApi(data);
                 memberDetailScreen(centerId, memberId);
             }        

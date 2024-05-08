@@ -47,13 +47,12 @@ export function formatCommaNumber(num) {
 
 // 하이폰 제거 - 대신 .
 export function formatReplaceString(dateString) {
-    if (!dateString) {
-      console.error('Invalid date string');
+  if (!dateString || dateString.trim() === '') {
       return '';  // 빈 문자열 반환
-    }
-    
-    return dateString.replace(/-/g, '.');
   }
+  
+  return dateString.replace(/-/g, '.');
+}
 
 // 휴대폰 번호 정규식
 export function validatePhone(phone) {

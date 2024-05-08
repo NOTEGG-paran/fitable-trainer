@@ -9,7 +9,7 @@ function RegisteredModal({setRegisteredModal , resetClassData}) {
     const navigation = useNavigation();
     const [openFloatingModal, setOpenFloatingModal] = useRecoilState(floatingState);
     const closeModal = () => {
-        resetClassData();
+        // resetClassData();
         setRegisteredModal(false);
     }
 

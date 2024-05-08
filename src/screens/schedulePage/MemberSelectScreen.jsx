@@ -152,8 +152,8 @@ console.log('vpdlwl',page)
                     showsVerticalScrollIndicator={false}
                     showsHorizontalScrollIndicator={false}
                     bounces={false}
-                    onEndReached={loadMembers}
-                    onEndReachedThreshold={0.5} 
+                    onEndReached={routerType ==='ableclass'?()=>classMembers():()=>loadMembers()}
+                    onEndReachedThreshold={0.2} 
                     renderItem={({ item }) => (
                         <MemberItem onPress={()=>reservationBtn(lessonId, item.memberTicketId)}>
                             <ContentContainer>

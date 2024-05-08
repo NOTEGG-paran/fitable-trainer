@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
-import { Platform } from 'react-native';
+import { Platform ,TouchableOpacity} from 'react-native';
 import { COLORS } from "../../constants/color";
 import CheckBox from '@react-native-community/checkbox';
 function ClassDateCheckBtn({ isLesson,setIsLesson,setMember}) {
@@ -8,6 +8,7 @@ function ClassDateCheckBtn({ isLesson,setIsLesson,setMember}) {
 
     //toggle
     const handleCheckboxChange = () => {
+        console.log('ddd')
         setIsLesson(!isLesson);
         if(!isLesson){
             setMember(null)
@@ -15,26 +16,53 @@ function ClassDateCheckBtn({ isLesson,setIsLesson,setMember}) {
     }
 
     return (
-        <CheckBoxWrapper
-        onPress={handleCheckboxChange}
-        >
-
-        <CheckBoxStyle
-        value={isLesson}
-        tintColors={{ true: COLORS.sub, false: COLORS.gray_200 }}
-        
-        onCheckColor={COLORS.main}
-        onFillColor={COLORS.box}
-        onTintColor={COLORS.box}
-        boxType={'square'}
-        tintColor={COLORS.gray_200}
-        // lineWidth={2}
-        />
-
-        <CheckText isChecked={isLesson}>수업 외 일정</CheckText>
-
-        
-        </CheckBoxWrapper>
+        <>
+     {
+        Platform.OS === 'ios' ? (
+            <CheckBoxWrapper
+            onPress={handleCheckboxChange}
+            >
+            <CheckBoxStyle
+            value={!isLesson}
+            tintColors={{ true: COLORS.sub, false: COLORS.gray_200 }}
+            animationDuration={0}
+            onCheckColor={COLORS.main}
+            onFillColor={COLORS.box}
+            onTintColor={COLORS.box}
+            boxType={'square'}
+            tintColor={COLORS.gray_200}
+            // lineWidth={2}
+            />
+    
+            <CheckText isChecked={!isLesson}>수업 외 일정</CheckText>
+    
+            
+            </CheckBoxWrapper>
+        ):(
+            <CheckBoxWrapper
+            onPress={handleCheckboxChange}
+            >
+    
+            <CheckBoxStyle
+            value={!isLesson}
+            tintColors={{ true: COLORS.sub, false: COLORS.gray_200 }}
+            animationDuration={0}
+            onCheckColor={COLORS.main}
+            onFillColor={COLORS.box}
+            onTintColor={COLORS.box}
+            boxType={'square'}
+            tintColor={COLORS.gray_200}
+            // lineWidth={2}
+            onValueChange={handleCheckboxChange}
+            />
+    
+            <CheckText isChecked={!isLesson}>수업 외 일정</CheckText>
+    
+            
+            </CheckBoxWrapper>
+        )
+     }
+     </>
     );
 }
 
@@ -46,6 +74,7 @@ const CheckBoxWrapper = styled.TouchableOpacity`
     align-items: center;
     margin-bottom:30px;
     margin-left: ${Platform.OS === 'ios' ? '2px' : '0px'};
+
 `
 
 

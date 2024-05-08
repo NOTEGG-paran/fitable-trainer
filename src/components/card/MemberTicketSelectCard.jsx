@@ -6,7 +6,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import {getMemberConditions} from '../../api/memberApi';
 import FastImage from 'react-native-fast-image';
 import { Dimensions } from 'react-native';
-function MemberTicketSelectCard({ticketId,bookmarkTickets,
+function MemberTicketSelectCard({ticketId,bookmarkTickets,setPriceIndex,
     setFormData,selectedTicket, timeAndPeriod, setTimeAndPeriod,index,setSelectTicketId}) {
     // const {startDate=""}=state ||{};
     const rightIcon = require('../../assets/img/caretdownblack.png');
@@ -29,7 +29,7 @@ function MemberTicketSelectCard({ticketId,bookmarkTickets,
         trPickerRef.current?.togglePicker(true);
     };
 
-
+   
       const transformedBookmarkTickets = bookmarkTickets.map(ticket => ({
         label: ticket.name,
         value: ticket.id,
@@ -59,7 +59,7 @@ function MemberTicketSelectCard({ticketId,bookmarkTickets,
       const getMemberConditionsData = async (id) => {
         try {
           const response = await getMemberConditions(id);
-        //   console.log('response1123',response)
+          console.log('가격입니다',response)
           if (response) {
             setTimeAndPeriod(response);        
             }
@@ -176,13 +176,14 @@ function MemberTicketSelectCard({ticketId,bookmarkTickets,
                       fixAndroidTouchableBug={true}
                         doneText="변경"
                         value={currentTicketId}
-                        onValueChange={(value) => {
+                        onValueChange={(value,idx) => {
                             setFormData((prevData) => {
                                 let tickets = [...prevData.tickets];
                                 tickets[index].id = value;
                                 return {...prevData, tickets};
                             });
                             setCurrentTicketId(value);
+                            setPriceIndex(idx)
                         }}
                         items={transformedTimeAndPeriodTickets}
                         placeholder={{}}
@@ -200,13 +201,14 @@ function MemberTicketSelectCard({ticketId,bookmarkTickets,
                       fixAndroidTouchableBug={true}
                         doneText="변경"
                         value={currentTicketId}
-                        onValueChange={(value) => {
+                        onValueChange={(value,idx) => {
                             setFormData((prevData) => {
                                 let tickets = [...prevData.tickets];
                                 tickets[index].id = value;
                                 return {...prevData, tickets};
                             });
                             setCurrentTicketId(value);
+                            setPriceIndex(idx)
                         }}
                         items={transformedTimeAndPeriodTickets}
                         placeholder={{}}

@@ -74,10 +74,11 @@ const [endDate, setEndDate] = useState("");
 const [dayOfWeek, setDayOfWeek] = useState("");
 const [startTime, setStartTime] = useState("");
 const [endTime, setEndTime] = useState("");
-const [isLesson, setIsLesson] = useState(false);
+const [isLesson, setIsLesson] = useState(true);
 const [selectName, setSelectName] = useState(className);
 const [selectItem, setSelectItem] = useState(classItem);
 const [selectLocation, setSelectLocation] = useState(classLocation);
+
 console.log('className',className,classItem,classLocation)
 // schedules
 const [schedules, setSchedules] = useState([
@@ -137,17 +138,17 @@ const [schedules, setSchedules] = useState([
     // 수업 관련 데이터 상태 관리
 
     const resetClassData = () => {
-        setClassName(null);
-        setClassItem(null);
-        setClassLocation(null);
-        setDate(new Date());
-        setEdate(new Date());
-        setStartDate("");
-        setEndDate("");
+        // setClassName(null);
+        // setClassItem(null);
+        // setClassLocation(null);
+        // setDate(new Date());
+        // setEdate(new Date());
+        // setStartDate("");
+        // setEndDate("");
         setDayOfWeek("");
-        setStartTime("");
-        setEndTime("");
-        setSelectedCheckBox("SINGLE");
+        // setStartTime("");
+        // setEndTime("");
+        // setSelectedCheckBox("SINGLE");
         setSchedules([
             {
                 dayOfWeek: "",
@@ -156,26 +157,26 @@ const [schedules, setSchedules] = useState([
             },
         ]);
 
-        setSelectItem(null);
-        setSelectLocation(null);
-        setSelectName(null);
-        if(isLesson === false && selectedCheckBox==='SINGLE' &&  type !== 'GROUP' && member){
-                setMember(null)
-        }
-        updateClassData();
+        // setSelectItem(null);
+        // setSelectLocation(null);
+        // setSelectName(null);
+        // if(isLesson === false && selectedCheckBox==='SINGLE' &&  type !== 'GROUP' && member){
+        //         setMember(null)
+        // }
+        // updateClassData();
     }
 
     const resetbtnData = () => {
-        setClassName(null);
-        setClassItem(null);
-        setClassLocation(null);
-        setDate(new Date());
-        setEdate(new Date());
-        setStartDate("");
-        setEndDate("");
+    //     setClassName(null);
+    //     setClassItem(null);
+    //     setClassLocation(null);
+    //     setDate(new Date());
+    //     setEdate(new Date());
+    //     setStartDate("");
+    //     setEndDate("");
         setDayOfWeek("");
-        setStartTime("");
-        setEndTime("");
+    //     setStartTime("");
+    //     setEndTime("");
         setSchedules([
             {
                 dayOfWeek: "",
@@ -184,13 +185,13 @@ const [schedules, setSchedules] = useState([
             },
         ]);
 
-        setSelectItem(null);
-        setSelectLocation(null);
-        setSelectName(null);
-        if(isLesson === false && selectedCheckBox==='SINGLE' &&  type !== 'GROUP' && member){
-            setMember(null)
-    }
-        updateClassData();
+    //     setSelectItem(null);
+    //     setSelectLocation(null);
+    //     setSelectName(null);
+    //     if(isLesson === false && selectedCheckBox==='SINGLE' &&  type !== 'GROUP' && member){
+    //         setMember(null)
+    // }
+    //     updateClassData();
     }
 
 
@@ -287,6 +288,7 @@ const [schedules, setSchedules] = useState([
         // setRegisteredModal(true);
         if(selectedCheckBox === 'SINGLE'){
             console.log('tl싱글 개인이요',personalData)
+            // setRegisteredModal(true);
             try {
                 const response = await registerClass(personalData);
                 if (response) {
@@ -304,6 +306,7 @@ const [schedules, setSchedules] = useState([
             }
 
         }else if(selectedCheckBox === 'MULTIPLE'){
+            // setRegisteredModal(true);
             console.log('tl멀티 개인이요',personalData)
             try {
                 const response = await registerClass(personalData);
@@ -329,13 +332,13 @@ const [schedules, setSchedules] = useState([
     // 그룹 수업 등록
     const groupRegisterBtn = async(postData,selectedCheckBox) => {
         console.log('postData@#!@#!@#!@#!@#@!#!@#!@#!@#!@#!@#!@#!@#@!',postData)
-        updateClassData();
+        // updateClassData();
         // setRegisteredModal(true);
         console.log('Class data in test:', classData);
         console.log('성공전전에 classData0', classData);
 
         if(selectedCheckBox === 'SINGLE'){
-
+            // setRegisteredModal(true);
         try {
             const response = await registerClass(postData);
             if (response) {
@@ -352,6 +355,7 @@ const [schedules, setSchedules] = useState([
             }
         }
     }else if(selectedCheckBox === 'MULTIPLE'){
+        // setRegisteredModal(true);
     try {
         console.log('aajfxlajf멀티쪽임')
         const response = await registerClass(postData);
@@ -464,13 +468,13 @@ if (isInvalidSchedule) {
     
     const getAssignableMembersScreen = async(id, ableDate, startTime, endTime) => {
         const date = `${ableDate.getFullYear()}-${(ableDate.getMonth() + 1).toString().padStart(2, '0')}-${ableDate.getDate().toString().padStart(2, '0')}`
-        console.log('상세아이디 getAssignableMembersScreen',id, date, startTime, endTime)
+        console.log('회원 배정 date확인 로그',id, date, startTime, endTime)
         if(!date || !startTime || !endTime){
             Alert.alert('날짜와 시간을 선택해주세요');
-        }
+        }else{
             try{
                 const response = await getAssignableMembers({id, date, startTime, endTime,},0,10);
-                console.log('최초 회원 선택 응답')
+                console.log('최초 회원 선택 응답',response.content.length)
                 navigation.navigate('MemberSelect',{
                     selectData: response.content,
                     routerType:'ableclass',
@@ -481,6 +485,7 @@ if (isInvalidSchedule) {
             }catch(error){
                 console.log('123err', error)
             }
+        }
     }
 console.log('personalData',personalData)
     
@@ -512,7 +517,7 @@ console.log('personalData',personalData)
                  setIsActive(isPersonalMultipleActiveFn());
             }
         }
-    }, [className, classItem, classLocation, startDate, startTime, endTime, classData,schedules]);
+    }, [className, classItem, classLocation, startDate, startTime, endTime, classData,schedules,selectedCheckBox]);
   
 
 const singlePersActive = (personalData) => {
@@ -671,7 +676,7 @@ const grupPersActive = (postData) => {
                     )
             }
                {
-                   isLesson === false && selectedCheckBox==='SINGLE' &&  type !== 'GROUP' && (
+                  isLesson === true && selectedCheckBox==='SINGLE' &&  type !== 'GROUP' && (
                         member ? (
                             <MembersListContaniner>
                             <MemberName>{member.name}</MemberName>

@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import {getMemberDetail} from '../../api/memberApi';
 import FastImage from 'react-native-fast-image';
 
-function MemberInfoCard({ userInfo,type }) {
+function MemberInfoCard({ userInfo,type,index }) {
 
     const navigation = useNavigation();
     const nextIcon = require('../../assets/img/rightIcon.png');
@@ -38,7 +38,7 @@ function MemberInfoCard({ userInfo,type }) {
 
     return (
         <>
-        <CardContainer onPress={()=>memberDetailScreen(centerId,userInfo.id)}>
+        <CardContainer onPress={()=>memberDetailScreen(centerId,userInfo.id)}isFirst={index === 0}>
             <BtnGridBox>
             <UserName>{userInfo.name}</UserName>
             <UserPhone>{formatPhoneNumber(userInfo.phone)}</UserPhone>
@@ -57,6 +57,7 @@ const CardContainer = styled.TouchableOpacity`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    margin-top: ${({ isFirst }) => isFirst ? '18px' : '0'};
 `;
 
 const UserName = styled.Text`

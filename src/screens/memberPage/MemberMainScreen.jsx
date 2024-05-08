@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {COLORS} from '../../constants/color'
-import {MainContainer,GridLine} from '../../style/gridStyled'
+import {MainContainer} from '../../style/gridStyled'
 import CenterListHeaderGrid from '../../components/grid/CenterListHeaderGrid';
 import MemberBtnContents from '../../components/button/MemberBtnContents';
 import MemberSearch from '../../components/input/MemberSearch';
@@ -212,4 +212,11 @@ const AndroidStyled = styled.View`
     flex-direction:row;
     align-items:center;
     justify-content:space-between;
+`
+
+export const GridLine = styled.View`
+     width: 100%;
+    height: 1px;
+    background-color: ${COLORS.gray_200};
+    margin-top: 15px;
 `

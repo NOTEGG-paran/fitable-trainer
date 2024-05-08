@@ -1,13 +1,13 @@
 import {useNavigation, useRoute} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {ScrollView, TextInput, View} from 'react-native';
+import {ScrollView, TextInput, View,Platform} from 'react-native';
 import {useRecoilState} from 'recoil';
 import styled from 'styled-components/native';
 import GobackGrid from '../../components/grid/GobackGrid';
 import {COLORS} from '../../constants/color';
 import {contractState} from '../../store/atom';
 import {MainContainer} from '../../style/gridStyled';
-
+import {formatReplaceString} from '../../utils/CustomUtils';
 const paymentTypeItem = {
   CARD: '카드',
   CASH: '현금',
@@ -105,19 +105,19 @@ function EditContractScreen(props) {
 
                     <DateContainer>
                       <TextInput
-                        style={{width: 87, paddingVertical: 20}}
+                        // style={{width: 87, paddingVertical: 20}}
                         placeholder="0000.00.00"
-                        value={updatedContractTicket[index]?.startDate}
+                        value={formatReplaceString(updatedContractTicket[index]?.startDate)|| ''}
                         onChangeText={text => {
                           updateContractTicketDetail(item, 'startDate', text);
                         }}
                         maxLength={10}
                       />
-                      <DateContainer.Text>{`~`}</DateContainer.Text>
+                      <DateContainer.Text>{` ~ `}</DateContainer.Text>
                       <TextInput
-                        style={{width: 90}}
+                        // style={{width: 90}}
                         placeholder="0000.00.00"
-                        value={updatedContractTicket[index]?.endDate}
+                        value={formatReplaceString(updatedContractTicket[index]?.endDate)|| ''}
                         onChangeText={text => {
                           updateContractTicketDetail(item, 'endDate', text);
                         }}
@@ -230,12 +230,14 @@ const ContractTitle = styled.Text`
 `;
 
 const DateContainer = styled.View`
-  width: 205px;
+  width: ${Platform.OS === 'ios' ? '64%' : '66%'};
   border-radius: 10px;
   flex-direction: row;
   background-color: ${COLORS.gray_100};
   align-items: center;
-  padding: 0px 10px;
+  /* padding: 0px 0px; */
+  /* padding: 14px 20px; */
+  padding: ${Platform.OS === 'ios' ? '14px 20px' : '0px 10px'};
 `;
 
 DateContainer.Text = styled.Text`
