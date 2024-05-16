@@ -345,7 +345,8 @@ Agreement.Text = styled.Text`
 function CheckBoxBtn({
   isChecked,
   handleCheckboxChange,
-  style = {},
+  style = {
+  },
   checkBoxStyle = {},
   ...props
 }) {

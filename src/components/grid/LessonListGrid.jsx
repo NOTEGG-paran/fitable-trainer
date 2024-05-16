@@ -29,27 +29,40 @@ function LessonListGrid({lessonList,loadMore}) {
     const group = require('../../assets/img/group_s.png');
 
 
-    const renderItem = ({ item }) => (
-        <LessonListContainer>
-        <LessonCard onPress={() => detailLessonScreen(item.id)}>
-            <LessonIcon source={item.type === 'PERSONAL' ? personal : group} />
-            <InnerLessonCard>
-                <LessonInfo>
-                    <LessonNameAndTrainer>{item.name} • {item.trainers.join(', ')} 강사</LessonNameAndTrainer>
-                    <LessonTime>{item.startTime} ~ {item.endTime}</LessonTime>
-                    <MembersInfoContainer>
-                        <MembersInfoText>{item.reservationMembers.memberName || '알 수 없음 회원'} 회원</MembersInfoText>
-                        {item.reservationMembers.max && (
-                            <MembersInfoText>({item.reservationMembers.current}/{item.reservationMembers.max})</MembersInfoText>
-                        )}
-                        {item.location && (<MembersInfoText> | {item.location}</MembersInfoText>)}
-                    </MembersInfoContainer>
-                </LessonInfo>
-                <LessonNextIcon source={nextIcon} />
-            </InnerLessonCard>
-        </LessonCard>
-        </LessonListContainer>
-    );
+    const renderItem = ({ item }) => {
+        // Determine the member information based on the reservation members
+        let memberText;
+        if (item.reservationMembers.current === 0) {
+            // No members reserved
+            memberText = '아직 예약한 회원이 없습니다';
+        } else {
+            // Members are reserved but no name is available
+            memberText = item.reservationMembers.memberName ? `${item.reservationMembers.memberName} 회원` : '알 수 없음';
+        }
+    
+        return (
+            <LessonListContainer>
+                <LessonCard onPress={() => detailLessonScreen(item.id)}>
+                    <LessonIcon source={item.type === 'PERSONAL' ? personal : group} />
+                    <InnerLessonCard>
+                        <LessonInfo>
+                            <LessonNameAndTrainer>{item.name} • {item.trainers.join(', ')} 강사</LessonNameAndTrainer>
+                            <LessonTime>{item.startTime} ~ {item.endTime}</LessonTime>
+                            <MembersInfoContainer>
+                                <MembersInfoText>{memberText}</MembersInfoText>
+                                {item.reservationMembers.current !== 0 && item.reservationMembers.max && (
+                                    <MembersInfoText>({item.reservationMembers.current}/{item.reservationMembers.max})</MembersInfoText>
+                                )}
+                                {item.reservationMembers.current !== 0 && item.location && (<MembersInfoText> | {item.location}</MembersInfoText>)}
+                            </MembersInfoContainer>
+                        </LessonInfo>
+                        <LessonNextIcon source={nextIcon} />
+                    </InnerLessonCard>
+                </LessonCard>
+            </LessonListContainer>
+        );
+    };
+    
 
 
 

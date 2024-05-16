@@ -5,11 +5,11 @@ import { SelectContainer } from '../../style/gridStyled';
 import GobackGrid from '../../components/grid/GobackGrid';
 import { useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
-import { FlatList,Alert } from 'react-native';
+import { FlatList,Alert,ActivityIndicator } from 'react-native';
 import {formatPhoneNumber} from '../../utils/CustomUtils';
 import {postLessonReservation} from '../../api/lessonApi';
 import {getAssignableMembers} from '../../api/classApi';
-import { useState,useEffect } from 'react';
+import { useState,useEffect,useCallback } from 'react';
 import FastImage from 'react-native-fast-image';
 import {getLessonReservationMembers} from'../../api/lessonApi';
 function MemberSelectScreen(props) {
@@ -22,7 +22,7 @@ function MemberSelectScreen(props) {
     const [members, setMembers] = useState(selectData || []);
     const [page, setPage] = useState(nextPage || 0);
     const [hasMorePages, setHasMorePages] = useState(hasMore || false);
-
+    const [isLoading, setIsLoading] = useState(false);
     const goBack = () => {
         navigation.goBack();
     }
@@ -35,36 +35,14 @@ function MemberSelectScreen(props) {
         }
     }, [routerType, classMembers, loadMembers]);
 
-    const classMembers = async () => {
+    const classMembers = useCallback(async () => {
         if (!hasMore) return;
+        setIsLoading(true);
         try {
             const { id, date, startTime, endTime } = abprops;
             const response = await getAssignableMembers({id, date, startTime, endTime ,page,size:10});
             console.log('나호출123123 ??!',page)
-            if (response.content.length < 10) {
-                setHasMorePages(false); // 데이터가 10개 미만이면 마지막 페이지로 간주
-            }
-            setMembers(prev => {
-                const updatedMembers = [...prev, ...response.content];
-                const uniqueMembers = Array.from(new Set(updatedMembers.map(a => a.memberTicketId)))
-                    .map(id => {
-                        return updatedMembers.find(a => a.memberTicketId === id)
-                    });
-                return uniqueMembers;
-            });
-            setPage(page + 1);
-        } catch (error) {
-            // console.error('Failed to fetch members:', error);
-        }
-    };
-console.log('vpdlwl',page)
-
-    const loadMembers = async () => {
-        if (!hasMore) return;
-        try {
-            const response = await getLessonReservationMembers(lessonId, page, 10);
-            console.log('나호출 ??!')
-            if (response.content.length < 10) {
+            if (response && response.content.length < 10) {
                 setHasMorePages(false); // 데이터가 10개 미만이면 마지막 페이지로 간주
             }
             setMembers(prev => {
@@ -78,8 +56,40 @@ console.log('vpdlwl',page)
             setPage(page + 1);
         } catch (error) {
             console.error('Failed to fetch members:', error);
+            setHasMorePages(false);
+        } finally {
+            setIsLoading(false);
         }
-    };
+    }, [hasMore, isLoading, lessonId, members, page]);
+console.log('vpdlwl',page)
+
+    const loadMembers = useCallback(async () => {
+        if (!hasMore || isLoading) return; // 이미 로딩 중이거나 더 불러올 데이터가 없으면 실행하지 않음
+        setIsLoading(true);
+        try {
+            const response = await getLessonReservationMembers(lessonId, page, 10);
+            console.log('나호출 ??!')
+            if (response && response.content.length < 10) {
+                console.log('마지막페이지입니다.')
+                setHasMorePages(false); // 데이터가 10개 미만이면 마지막 페이지로 간주
+                setIsLoading(false);
+            }
+            setMembers(prev => {
+                const updatedMembers = [...prev, ...response.content];
+                const uniqueMembers = Array.from(new Set(updatedMembers.map(a => a.memberTicketId)))
+                    .map(id => {
+                        return updatedMembers.find(a => a.memberTicketId === id)
+                    });
+                return uniqueMembers;
+            });
+            setPage(page + 1);
+        } catch (error) {
+            console.error('Failed to fetch members:11', error);
+            setHasMorePages(false);
+        } finally {
+            setIsLoading(false);
+        }
+     }, [hasMore, isLoading, lessonId, members, page]);
 
     const reservationBtn = async(lessonId,memberTicketId) => {
         if (isProcessing) return;
@@ -133,6 +143,16 @@ console.log('vpdlwl',page)
     }
 
     const nextIcon = require('../../assets/img/rightIcon.png');
+    const renderItem = useCallback(({ item }) => (
+        <MemberItem onPress={() => reservationBtn(lessonId, item.memberTicketId)}>
+            <ContentContainer>
+                <NameText>{item.name || '알 수 없음'}</NameText>
+                <PhoneText>{formatPhoneNumber(item.phone)}</PhoneText>
+            </ContentContainer>
+            <AddNextIcon source={nextIcon}/>
+        </MemberItem>
+    ), [lessonId]);
+
 
     return (
         <SelectContainer>
@@ -152,19 +172,23 @@ console.log('vpdlwl',page)
                     showsVerticalScrollIndicator={false}
                     showsHorizontalScrollIndicator={false}
                     bounces={false}
-                    onEndReached={routerType ==='ableclass'?()=>classMembers():()=>loadMembers()}
-                    onEndReachedThreshold={0.2} 
-                    renderItem={({ item }) => (
-                        <MemberItem onPress={()=>reservationBtn(lessonId, item.memberTicketId)}>
-                            <ContentContainer>
-                                {
-                                   item.name === null ? <NameText>알 수 없음</NameText> : <NameText>{item.name}</NameText>
-                                }
-                            <PhoneText>{formatPhoneNumber(item.phone)}</PhoneText>
-                            </ContentContainer>
-                            <AddNextIcon source={nextIcon}/>
-                        </MemberItem>
-                    )}
+                    // onEndReached={routerType ==='ableclass'?()=>classMembers():()=>loadMembers()}
+                    onEndReached={() => {
+                        if (!isLoading && hasMorePages) {
+                          if (routerType === 'ableclass') {
+                            classMembers();
+                          } else {
+                            loadMembers();
+                          }
+                        }
+                      }}
+                    onEndReachedThreshold={0.5} 
+                    ListFooterComponent={() => isLoading && (
+                    <CenteredView>
+                    <ActivityIndicator size="small" color={COLORS.sub} />
+                    </CenteredView>)
+                     }
+                    renderItem={renderItem}
                     />
                     </>
                 )
@@ -173,7 +197,7 @@ console.log('vpdlwl',page)
     );
 }
 
-export default MemberSelectScreen;
+export default React.memo(MemberSelectScreen);;
 
 const MemberItem = styled.TouchableOpacity`
     padding: 15px;
@@ -185,6 +209,15 @@ const MemberItem = styled.TouchableOpacity`
     border-radius: 13px;
     padding: 26px 16px;
 `;
+
+const CenteredView = styled.View`
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+`;
+
 
 const NoListContainer = styled.View`
     flex: 1;

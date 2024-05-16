@@ -105,7 +105,7 @@ function EditContractScreen(props) {
 
                     <DateContainer>
                       <TextInput
-                        // style={{width: 87, paddingVertical: 20}}
+                        // style={{ width: '45%' }} 
                         placeholder="0000.00.00"
                         value={formatReplaceString(updatedContractTicket[index]?.startDate)|| ''}
                         onChangeText={text => {
@@ -115,7 +115,7 @@ function EditContractScreen(props) {
                       />
                       <DateContainer.Text>{` ~ `}</DateContainer.Text>
                       <TextInput
-                        // style={{width: 90}}
+                        // style={{ width: '45%' }} 
                         placeholder="0000.00.00"
                         value={formatReplaceString(updatedContractTicket[index]?.endDate)|| ''}
                         onChangeText={text => {
@@ -124,6 +124,7 @@ function EditContractScreen(props) {
                         maxLength={10}
                       />
                     </DateContainer>
+
                   </Container>
 
                   <Container>
@@ -229,12 +230,14 @@ const ContractTitle = styled.Text`
   margin-top: 44px;
 `;
 
+
 const DateContainer = styled.View`
   width: ${Platform.OS === 'ios' ? '64%' : '66%'};
-  border-radius: 10px;
   flex-direction: row;
   background-color: ${COLORS.gray_100};
   align-items: center;
+  justify-content: center;
+  border-radius: 13px;
   /* padding: 0px 0px; */
   /* padding: 14px 20px; */
   padding: ${Platform.OS === 'ios' ? '14px 20px' : '0px 10px'};

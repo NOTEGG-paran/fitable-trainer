@@ -24,6 +24,7 @@ import ClassDateCheckBtn from '../../components/button/ClassDateCheckBtn';
 import FastImage from 'react-native-fast-image';
 import TrainerProfileGrid from '../../components/grid/TrainerProfileGrid';
 import TestCardsPicker from '../../components/card/TestCardsPicker';
+import LoadingModal from '../../components/modal/LoadingModal';
 function CreateClassScreen(props) {
 
     const route = useRoute();
@@ -40,6 +41,7 @@ function CreateClassScreen(props) {
     const [item, setItem] = useState([]);
     const [location, setLocation] = useState([]);
 
+    const [isLoading, setIsLoading] = useState(false);
     // 상태관리 값 
 const [classData, setClassData] = useState({
     centerId: centerId,
@@ -467,10 +469,12 @@ if (isInvalidSchedule) {
 
     
     const getAssignableMembersScreen = async(id, ableDate, startTime, endTime) => {
+        setIsLoading(true);
         const date = `${ableDate.getFullYear()}-${(ableDate.getMonth() + 1).toString().padStart(2, '0')}-${ableDate.getDate().toString().padStart(2, '0')}`
         console.log('회원 배정 date확인 로그',id, date, startTime, endTime)
         if(!date || !startTime || !endTime){
             Alert.alert('날짜와 시간을 선택해주세요');
+            setIsLoading(false);
         }else{
             try{
                 const response = await getAssignableMembers({id, date, startTime, endTime,},0,10);
@@ -484,6 +488,8 @@ if (isInvalidSchedule) {
                 })
             }catch(error){
                 console.log('123err', error)
+            }finally{
+                setIsLoading(false);
             }
         }
     }
@@ -685,7 +691,9 @@ const grupPersActive = (postData) => {
                             </DeleteContainer>
                             </MembersListContaniner>
                         ):(
-                            <AssignMemberContainer onPress={()=>getAssignableMembersScreen(centerId, date, startTime, endTime)}>
+                            <AssignMemberContainer 
+                            disabled={isLoading}
+                            onPress={()=>getAssignableMembersScreen(centerId, date, startTime, endTime)}>
                             <AddbtnBox>
                             <AddbtnIcon source={addBtnIcon}/>    
                             <LabelText>예약 회원</LabelText>
@@ -708,6 +716,9 @@ const grupPersActive = (postData) => {
            resetClassData={resetClassData}
               setRegisteredModal={setRegisteredModal}
            />
+        }
+        {
+            isLoading && <LoadingModal />
         }
         </>
     );

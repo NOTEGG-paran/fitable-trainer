@@ -148,6 +148,7 @@ function TrainerInfoListGrid({profileInfo,isEditMode,setIsEditMode, setProfileIn
             return;
         }
         isClicking.current = true;
+        
             try{
                 console.log('에디터 모드임')
                 // let combinedTimeSettings = (selectedCenter[0]?.timeSettings || []).concat(selectedCenter[1]?.timeSettings || []);

@@ -194,9 +194,11 @@ function RegisterMemberScreen(props) {
             >
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <KeyboardAwareScrollView
-            showsVerticalScrollIndicator={false}
-            bounces={false}
-            extraScrollHeight={10}
+              extraScrollHeight={10}
+              enableOnAndroid={true}
+              keyboardShouldPersistTaps='handled'
+              showsVerticalScrollIndicator={false}
+              bounces={false}
             >
             <MemberRegisterGrid 
             name={name}

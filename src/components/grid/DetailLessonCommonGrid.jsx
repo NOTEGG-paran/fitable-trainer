@@ -3,16 +3,19 @@ import { COLORS } from '../../constants/color';
 import { useNavigation } from '@react-navigation/native';
 import {getLessonReservationMembers,getLessonMemberDetail} from '../../api/lessonApi';
 import FastImage from 'react-native-fast-image';
+import { useState } from 'react';
+import LoadingModal from '../modal/LoadingModal';
 function DetailLessonCommonGrid({lessonDetail,routerType}) {
 
     const navigation = useNavigation();
-
+    const [isLoading, setIsLoading] = useState(false);
     // console.log('routerTyperouterType',routerType,lessonDetail)
 
 // console.log('lessonDetaillessonDetaillessonDetaillessonDetail',lessonDetail)
 
     const selectMemberScreen = async(id) => {
         console.log('lssoid',id)
+        setIsLoading(true)
             try{
                 const response = await getLessonReservationMembers(id,0,10);
                 // console.log('회원 선택 응답',response)
@@ -24,6 +27,8 @@ function DetailLessonCommonGrid({lessonDetail,routerType}) {
                 })
             }catch{
                 console.log('5err', error)
+            }finally{
+            setIsLoading(false)
             }
     }
 
@@ -44,6 +49,7 @@ function DetailLessonCommonGrid({lessonDetail,routerType}) {
     const personal = require('../../assets/img/activeperson.png');
     const group = require('../../assets/img/activegroup.png');
     const addbtn = require('../../assets/img/pluscircle.png');
+
 
     return (
         <InfoGroup>
@@ -96,13 +102,20 @@ function DetailLessonCommonGrid({lessonDetail,routerType}) {
             }
             </MembersListContaniner>
         ))}
-            <AddBtnContainer onPress={()=>selectMemberScreen(lessonDetail.id)}>
+            <AddBtnContainer 
+            disabled={isLoading}
+            onPress={()=>selectMemberScreen(lessonDetail.id)}>
                 <AddbtnBox>
                     <AddbtnIcon source={addbtn}/>
                     <AddBtnText>회원 선택</AddBtnText>
                 </AddbtnBox>
             </AddBtnContainer>
         </ScrollContainer>
+        {
+            isLoading && (
+                <LoadingModal />
+            )
+        }
     </InfoGroup>
     );
 }
@@ -112,6 +125,13 @@ export default DetailLessonCommonGrid;
 
 const InfoGroup = styled.View`
     flex:1;
+`;
+
+const CenteredView = styled.View`
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.50);
 `;
 
 const DetailHeaderContainer = styled.View`

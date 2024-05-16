@@ -1,15 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import {COLORS} from '../../constants/color';
 import ToggleBtn from '../toggle/ToggleBtn';
 import FastImage from 'react-native-fast-image';
 import DeviceInfo from 'react-native-device-info';
 import { getVersion } from 'react-native-device-info';
-
+import {getAppVersionCheck} from '../../api/version';
+import { useEffect } from 'react';
 let version = getVersion();
 console.log('version',version)
 
 function MySettingListBtnGrid({children, text, onPress,isOnPushAlarm}) {
+
+    const [curVersion, setCurVersion] = useState('')
+
+    useEffect(()=>{
+        getCurVersion()
+    },[])
+
+    const getCurVersion = async() => {
+        const appVersion = await getAppVersionCheck();
+        if(appVersion){
+            setCurVersion(appVersion.trainerAppVersionForAndroid);
+        }
+    }
+
     const rightIcon = require('../../assets/img/rightIcon.png')
     return (
         <>
@@ -24,7 +39,7 @@ function MySettingListBtnGrid({children, text, onPress,isOnPushAlarm}) {
             <SettingList>
                     <SettingListText>{children}</SettingListText>
                     {/* <VersionText>{version}</VersionText> */}
-                    <VersionText>1.0.5</VersionText>
+                    <VersionText>{curVersion && curVersion}</VersionText>
                 </SettingList>
             :
             <SettingListBtn onPress={onPress}>

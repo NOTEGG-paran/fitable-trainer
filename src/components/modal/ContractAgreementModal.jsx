@@ -73,9 +73,14 @@ const ModalTitle = styled.Text`
   margin-bottom: 42px;
 `;
 
-const ModalHdButton = styled.TouchableOpacity``;
+const ModalHdButton = styled.TouchableOpacity`
+padding: 10px;
+`;
 
-const ModalIcons = styled.Image``;
+const ModalIcons = styled.Image`
+width: 24px;
+height: 24px;
+`;
 
 const htmlSource = data => {
   return `

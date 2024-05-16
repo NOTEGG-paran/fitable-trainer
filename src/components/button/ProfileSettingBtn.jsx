@@ -12,7 +12,7 @@ function ProfileSettingBtn({children, onPress, isActive,openDateSelectModal,isEd
 
     return (
         <BasicMainBtnContainer>
-        <BasicMainBtnNextBtn onPress={handlePress} isActive={isActive}>
+        <BasicMainBtnNextBtn onPress={handlePress} isActive={isActive} disabled={!isActive}>
             <BasicMainBtnNextBtnNextText isActive={isActive}>{children}</BasicMainBtnNextBtnNextText>
         </BasicMainBtnNextBtn>
         {
