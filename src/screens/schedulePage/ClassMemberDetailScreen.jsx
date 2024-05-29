@@ -51,7 +51,7 @@ function ClassMemberDetailScreen(props) {
   const {detailData, screenType, memberId, isPotential} = route.params;
 
   console.log('나 넘어왔엉!', detailData, screenType, memberId, isPotential);
-
+//추가개발시 제거
   const cancelReservationBtn = async id => {
     try {
       const response = await cancelLessonReservation(id);
@@ -66,7 +66,7 @@ function ClassMemberDetailScreen(props) {
       console.log('예약취소 에러', error);
     }
   };
-
+//추가개발시 제거
   const postLessonAttendanceBtn = async id => {
     try {
       const response = await postLessonAttendance(id);
@@ -199,6 +199,7 @@ function ClassMemberDetailScreen(props) {
           )}
         </TicketContainer>
 
+        {/* 추가개발시 주석처리 할 것 */}
         {screenType !== 'memberDetail' && (
           <BtnContainer>
             {detailData?.isAvailableCancel && (

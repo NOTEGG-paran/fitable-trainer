@@ -17,6 +17,7 @@ function AlarmLessonListGrid({lessonList}) {
                 console.log('상세 응답',response)
                 if(response){
                       navigation.navigate('LessonDetail', {lessonDetail: response});
+                      // navigation.navigate('LessonDetail', {lessonDetailData: response, lessonId:id });
                   }
               }catch(error){
                     console.log('error 뜸 ㅠㅠ123', error)
