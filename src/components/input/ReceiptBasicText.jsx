@@ -1,0 +1,51 @@
+import React from 'react';
+import {COLORS} from '../../constants/color';
+import styled from 'styled-components/native';
+import {ScrollView, Title,Platform} from 'react-native';
+import RNPickerSelect from 'react-native-picker-select';
+import FastImage from 'react-native-fast-image';
+
+
+function ReceiptBasicText({title,placeholder,value,onChangeText}) {
+
+    return (
+        <InputContainer>
+            <InfoTitleText>{title}</InfoTitleText>
+   
+                    <SelectBox
+                    placeholder={placeholder}
+                    value={value}
+                    onChangeText={onChangeText}
+                    returnKeyType='done'
+                    >
+               
+             </SelectBox>
+         
+
+        </InputContainer>
+    );
+}
+
+export default ReceiptBasicText;
+
+const InputContainer = styled.View`
+    margin-top: 20px;
+`
+
+const InfoTitleText = styled.Text`
+color: ${COLORS.gray_400};
+ font-size: 14px;
+ font-weight: 500;
+ line-height: 22px;
+ margin-bottom: 8px;
+`;
+
+const SelectBox = styled.TextInput`
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid ${COLORS.gray_100};
+    border-radius: 13px;
+    padding: 15px 16px;
+    background-color: ${COLORS.gray_100};
+`

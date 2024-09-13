@@ -50,6 +50,41 @@ export const postNewIntegrateContract = async data => {
 
     return response.data;
   } catch (error) {
+    console.log('error', error.response.data);
+    throw error.response;
+  }
+};
+
+
+// 이미지 업로드
+export const upLoadImage = async data => {
+  try {
+    console.log('이미지업로드', data);
+
+    const response = await multipartAxios.post(
+      '/api/adminManagers/v1/images',
+      data,
+    );
+
+    return response.data;
+  } catch (error) {
+    console.log('error', error);
+    throw error.response;
+  }
+};
+
+// 이미지 삭제
+export const removeImage = async data => {
+  try {
+    console.log('이미지제거', data);
+
+    const response = await customAxios.post(
+      '/api/adminManagers/v1/images/remove',
+      data,
+    );
+
+    return response.data;
+  } catch (error) {
     console.log('error', error);
     throw error.response;
   }

@@ -30,6 +30,16 @@ export const getClassPlaces = async (id) => {
     }
 }
 
+//  강사 조회
+export const getClassTrainer = async (id) => {
+    try {
+        const response = await customAxios.get(`/api/trainers/v1/centers/${id}/lessons/trainer`);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
 // 수업 등록
 export const registerClass = async (data) => {
     try {
@@ -41,9 +51,9 @@ export const registerClass = async (data) => {
 }
 
 // 회원 배정 가능한 회원 조회
-export const getAssignableMembers = async ({id, date, startTime, endTime,page,size}) => {
+export const getAssignableMembers = async ({id, date, startTime, endTime, trainerId, page,size}) => {
     try {
-        const response = await customAxios.get(`/api/trainers/v1/lessons/members/assignment/valid/center/${id}/date/${date}/startTime/${startTime}/endTime/${endTime}?page=${page}&size=${size}`);
+        const response = await customAxios.get(`/api/trainers/v1/lessons/members/assignment/valid/center/${id}/date/${date}/startTime/${startTime}/endTime/${endTime}/trainerId/${trainerId}?page=${page}&size=${size}`);
         return response.data;
     } catch (error) {
         throw error;

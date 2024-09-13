@@ -1,5 +1,5 @@
-import {useNavigation, useRoute} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import {useNavigation, useRoute,useFocusEffect} from '@react-navigation/native';
+import React, {useEffect, useState,useCallback} from 'react';
 import {Alert, ScrollView, View} from 'react-native';
 import {useRecoilState} from 'recoil';
 import styled from 'styled-components/native';
@@ -27,43 +27,102 @@ function SignContractScreen(props) {
   const [contract, setContract] = useRecoilState(contractState);
 
   const [templateData, setTemplateData] = useState();
+  const [isReceipt, setIsReceipt] = useState(false)
+
+
+    // 계약서 템플릿 호출 API
+    useEffect(() => {
+      const getData = async () => {
+        try {
+          const response = await getIntergrateTemplate({
+            templateId: contract.contractTemplate.id,
+          });
+          if (response) {
+            setTemplateData(response);
+            setIsReceipt(response.isReceipt);
+          }
+        } catch (error) {
+          console.log('error', error);
+        }
+      };
+  
+      if (centerId && memberId) {
+        getData();
+      }
+    }, [centerId, memberId, contract.contractTemplate.id]);
+  
+    // 센터 서명 호출 API (초기화 방지 로직 추가)
+    useFocusEffect(
+      useCallback(() => {
+        const getData = async () => {
+          try {
+            // API 호출을 조건부로 실행 (이미 centerSignImage가 있는 경우 호출하지 않음)
+            if (!contract.centerSignImage?.uri) {
+              const response = await getCenterSign(centerId);
+              if (response) {
+                setContract(prev => ({
+                  ...prev,
+                  centerSignImage: { uri: response.imagePath, file: null },
+                }));
+              }
+            }
+          } catch (error) {
+            console.log('Error getting center sign:', error);
+          }
+        };
+  
+        if (centerId) {
+          getData();
+        }
+      }, [centerId, contract.centerSignImage?.uri, setContract])
+    );
+
 
   //계약서 템플릿 호출 api
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await getIntergrateTemplate({
-          templateId: contract.contractTemplate.id,
-        });
-        if (response) {
-          setTemplateData(response);
-        }
-      } catch (error) {
-        console.log('error', error);
-      }
-    };
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     try {
+  //       const response = await getIntergrateTemplate({
+  //         templateId: contract.contractTemplate.id,
+  //       });
+  //       console.log('response영수증유므',response.isReceipt)
+  //       if (response) {
+  //         setTemplateData(response);
+  //         setIsReceipt(response.isReceipt)
+  //       }
+  //     } catch (error) {
+  //       console.log('error', error);
+  //     }
+  //   };
 
-    if (centerId && memberId) {
-      getData();
-    }
-  }, []);
+  //   if (centerId && memberId) {
+  //     getData();
+  //   }
+  // }, []);
 
   //센터 서명 호출 api
-  useEffect(() => {
-    const getData = async () => {
-      const response = await getCenterSign(centerId);
-      if (response) {
-        setContract(prev => {
-          return {
-            ...prev,
-            ['centerSignImage']: {uri: response.imagePath, file: null},
-          };
-        });
-      }
-    };
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     const response = await getCenterSign(centerId);
+  //     console.log('responses나센터서명 호출',response)
+  //     if (response) {
+  //       setContract(prev => {
+  //         return {
+  //           ...prev,
+  //           ['centerSignImage']: {uri: response.imagePath, file: null},
+  //         };
+  //       });
+  //     }
+  //   };
 
-    getData();
-  }, []);
+  //   getData();
+  // }, []);
+
+
+  const addReciptBtn = () =>{
+    // navigation.navigate('AddReceipt');
+    navigation.navigate('AddReceipt', {memberId});
+  }
 
   const registerNewContract = async () => {
     try {
@@ -129,7 +188,8 @@ function SignContractScreen(props) {
         navigation.navigate('ContractSuccess', {memberId});
       }
     } catch (error) {
-      Alert('post 실패');
+      console.log('error',error.response)
+      Alert('서명 실패');
     }
   };
 
@@ -172,9 +232,9 @@ function SignContractScreen(props) {
 
   let isActive =
     isCenterSignature() && isMemberSignature() && isAdminSignature();
-
-  // console.log('isActive', isActive);
-
+    console.log('templateData?.centerSignImage11111111');
+  console.log('templateData?.centerSignImage',contract.centerSignImage);
+  console.log('templateData?.centerSignImage3333333');
   return (
     <MainContainer>
       <GobackGrid onPress={goBack}>계약서 작성</GobackGrid>
@@ -265,16 +325,42 @@ function SignContractScreen(props) {
         </GridMarginContainer>
       </ScrollView>
 
-      <BasicMainBtnContainer>
+      {/* <BasicMainBtnContainer>
         <BasicMainBtnNextBtn
           disabled={!isActive}
           isActive={isActive}
           onPress={() => registerNewContract()}>
           <BasicMainBtnNextBtnNextText isActive={isActive}>
-            작성완료
+            계약서 저장
           </BasicMainBtnNextBtnNextText>
         </BasicMainBtnNextBtn>
-      </BasicMainBtnContainer>
+      </BasicMainBtnContainer> */}
+
+      <BasicMainBtnContainer1>
+      {
+        isActive && isReceipt && (
+          <BasicMainBtnNextAddBtn
+          disabled={!isActive}
+          isActive={isActive&&isReceipt}
+          onPress={() => addReciptBtn()}
+          >
+          <BasicMainBtnNextBtnNextAddText isActive={isActive}>
+            영수증 추가
+          </BasicMainBtnNextBtnNextAddText>
+        </BasicMainBtnNextAddBtn>
+        )
+      }
+        <BasicMainBtnNextBtn
+          disabled={!isActive}
+          isActive={isActive}
+          onPress={() => registerNewContract()}>
+          <BasicMainBtnNextBtnNextText isActive={isActive}>
+            계약서 저장
+          </BasicMainBtnNextBtnNextText>
+        </BasicMainBtnNextBtn>
+
+      </BasicMainBtnContainer1>
+
     </MainContainer>
   );
 }
@@ -298,13 +384,33 @@ const BasicMainBtnContainer = styled.View`
   /* justify-content: center;     */
 `;
 
+const BasicMainBtnContainer1 = styled.View`
+  /* position: absolute;
+  bottom: 0px;
+  left: 20px;
+  right: 20px;
+  height: 80px; */
+  background-color: ${COLORS.white};
+  /* align-items: center; */
+  /* justify-content: center;     */
+`;
 const GridMarginContainer = styled.View`
   margin-top: 44px;
 `;
 
+const BasicMainBtnNextAddBtn = styled.TouchableOpacity`
+  background-color: ${props => (props.isActive ? COLORS.main : COLORS.gray_100)};
+  margin-bottom: 14px;
+  border-radius: 90px;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 0;
+  width: 100%;
+`;
+
 const BasicMainBtnNextBtn = styled.TouchableOpacity`
   background-color: ${props => (props.isActive ? COLORS.sub : COLORS.gray_100)};
-
+  margin-bottom: 20px;
   border-radius: 90px;
   align-items: center;
   justify-content: center;
@@ -317,6 +423,13 @@ const BasicMainBtnNextBtnNextText = styled.Text`
   font-weight: 600;
   line-height: 22.4px;
   color: ${COLORS.white};
+`;
+
+const BasicMainBtnNextBtnNextAddText = styled.Text`
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 22.4px;
+  color: ${COLORS.sub};
 `;
 
 const InfoTitleText = styled.Text`

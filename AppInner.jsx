@@ -6,49 +6,51 @@ import {isLoginState} from './src/store/atom';
 import {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ActivityIndicator, View } from 'react-native';
+import EncryptedStorage from 'react-native-encrypted-storage';
+import SplashScreen from './src/screens/splash/SplashScreen';
 import {autoLoginApi} from './src/api/authApi';
+import { Text, TextInput } from 'react-native';
+import {checkAccessTokenValidity} from './src/utils/CustomUtils';
+import {refreshTokenFn} from './src/api/customAxios';
+// 전역 텍스트 설정
+Text.defaultProps = Text.defaultProps || {};
+Text.defaultProps.allowFontScaling = false;
+
+TextInput.defaultProps = TextInput.defaultProps || {};
+TextInput.defaultProps.allowFontScaling = false;
 function AppInner() {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoginState);
   const [isLoading, setIsLoading] = useState(true);
 
-useEffect(() => {
-  const checkLoginStatus = async () => {
-    console.log('5분마다 감지')
-    try {
-      // 최초 로그인시 로컬 스토리지에 저장된 로그인 상태 확인
-      const isLoginAsync = await AsyncStorage.getItem('isLogin');
-      // 토큰 갱신 api
-      const result = await autoLoginApi();
-      setIsLoggedIn(result && isLoginAsync === 'true'); 
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      try {
+        const accessToken = await EncryptedStorage.getItem('accessToken');
+        const refreshToken = await EncryptedStorage.getItem('refreshToken');
+        if (accessToken && refreshToken) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
+      } catch (error) {
+        console.error('자동 로그인 오류:', error);
+        setIsLoggedIn(false);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-    } catch (error) {
-      console.error('Auto login error11:', error);
-     
-    } finally {
-      setIsLoading(false);
-    }
-  };
-  // 5분마다 로그인 상태를 감지
-  checkLoginStatus();
-  const interval = setInterval(checkLoginStatus, 5 * 60 * 1000); // 5분마다 감지
-  console.log('interval',interval)
-  return () => clearInterval(interval);
-}, [setIsLoggedIn]);
+    checkLoginStatus();
+  }, []);
 
-
-console.log('isLoggedInisLoggedIn',isLoggedIn)
+  console.log('isLoggedIn:', isLoggedIn);
   if (isLoading) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
+    return <SplashScreen />;
   }
 
   return (
     <NavigationContainer>
-      {/* <Auth /> */}
-      { isLoggedIn ? <AppScreens /> : <Auth />}
+      {isLoggedIn ? <AppScreens /> : <Auth />}
     </NavigationContainer>
   );
 }

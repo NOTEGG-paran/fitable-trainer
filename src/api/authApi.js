@@ -2,6 +2,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import Config from 'react-native-config';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 const baseURL = Config.API_URL;
 console.log('baseURL123',baseURL)
@@ -12,9 +13,9 @@ export const loginApi = async (phone, password, fcmToken) => {
         console.log('accessToken',accessToken)
         console.log('refreshToken',refreshToken)
         if (accessToken && refreshToken) {
-            await AsyncStorage.setItem("accessToken", accessToken);
-            await AsyncStorage.setItem("refreshToken", refreshToken);
-            await AsyncStorage.setItem("isLogin", "true"); // 문자열로 저장
+            await EncryptedStorage.setItem('accessToken', accessToken);
+            await EncryptedStorage.setItem('refreshToken', refreshToken);
+            await AsyncStorage.setItem('isLogin', 'true');
         } else {
             throw new Error('Missing tokens'); // 응답에서 토큰이 빠져 있으면 에러를 throw
         }

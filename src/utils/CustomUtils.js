@@ -42,8 +42,11 @@ export function formatDate(dateString) {
 
 // 숫자 콤마
 export function formatCommaNumber(num) {
-    return new Intl.NumberFormat().format(num);
+  if (num === '' || isNaN(Number(num))) {
+    return '0';
   }
+  return new Intl.NumberFormat().format(Number(num));
+}
 
 // 하이폰 제거 - 대신 .
 export function formatReplaceString(dateString) {
@@ -85,3 +88,52 @@ export function compareVersions(version1, version2) {
   }
   return 0; // 두 버전이 동일함
 }
+
+export function generateUUID() {
+  let d = new Date().getTime();
+  if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
+      d += performance.now(); // use high-precision timer if available
+  }
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      const r = (d + Math.random() * 16) % 16 | 0;
+      d = Math.floor(d / 16);
+      return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+  });
+}
+
+
+// token
+const base64Decode = (str) => {
+  try {
+    return decodeURIComponent(
+      atob(str)
+        .split('')
+        .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+        .join('')
+    );
+  } catch (error) {
+    console.error('Base64 디코딩 오류:', error);
+    return null;
+  }
+};
+
+export const checkAccessTokenValidity = (token) => {
+  if (!token) {
+    return false;
+  }
+
+  const parts = token.split('.');
+  if (parts.length !== 3) {
+    console.error('토큰 형식 오류: 토큰은 세 부분으로 구성되어야 합니다');
+    return false;
+  }
+
+  try {
+    const payload = JSON.parse(base64Decode(parts[1]));
+    const currentTime = Date.now() / 1000; // 현재 시간(초 단위)
+    return payload.exp > currentTime; // 토큰 만료 시간과 현재 시간 비교
+  } catch (error) {
+    console.error('토큰 유효성 검사 오류:', error);
+    return false;
+  }
+};

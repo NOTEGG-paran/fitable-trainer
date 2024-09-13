@@ -68,7 +68,7 @@ function SignScreen(props) {
   };
 
   useEffect(() => {
-    console.log('contract onChange', contract);
+    console.log('contract onChange');
   }, [contract]);
 
   return (

@@ -1,23 +1,31 @@
 import styled from 'styled-components/native';
 import { COLORS } from '../../constants/color';
 import { Modal} from 'react-native';
-
+import { useState } from 'react';
 function LessonAlertModal({ closeModal,modalVisible,startTime,endTime,memberName,statusType,memberLessonId,cancel,attendance,absent}) {
+
+    const [isClick,setIsClick]=useState(false);
 
     const closeLessonModal = () => {
         closeModal(false)
     }
 
     const onPressDoneBtn = (id,statusType) => {
-        console.log('id',id,statusType)
-        if(statusType ==='ATTENDANCE'){
-            attendance(id)
-        }else if(statusType ==='ABSENT'){
-            console.log('결석처리입니다')
-            absent(id)
-        }else{
-            console.log('예약취소입니다')
-            cancel(id)
+        console.log('id중복막았어?',statusType)
+        setIsClick(true)
+        try{
+            if(statusType ==='ATTENDANCE'){
+                console.log('참석')
+                attendance(id)
+            }else if(statusType ==='ABSENT'){
+                console.log('결석처리입니다')
+                absent(id)
+            }else{
+                console.log('예약취소입니다')
+                cancel(id)
+            }
+        }catch{
+            setIsClick(false)
         }
     }
 
@@ -41,7 +49,9 @@ function LessonAlertModal({ closeModal,modalVisible,startTime,endTime,memberName
                     <BtnText>취소</BtnText>
             </BtnSubBoxContainer>
 
-            <BtnSubBoxContainer color={true} onPress={()=>onPressDoneBtn(memberLessonId,statusType)}>
+            <BtnSubBoxContainer 
+            disabled={isClick?true:false}
+            color={true} onPress={()=>onPressDoneBtn(memberLessonId,statusType)}>
                     <BtnText color={true} >확인</BtnText>
             </BtnSubBoxContainer>
         </ButtonContainer>

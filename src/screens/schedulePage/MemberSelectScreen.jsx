@@ -14,8 +14,9 @@ import FastImage from 'react-native-fast-image';
 import {getLessonReservationMembers} from'../../api/lessonApi';
 function MemberSelectScreen(props) {
     const route = useRoute();
-    const { selectData, routerType, lessonId, nextPage, hasMore,abprops  } = route.params;
-    console.log('routerType, lessonId, nextPage, hasMore ',routerType, lessonId, nextPage, hasMore,abprops )
+    const { selectData, routerType, lessonId, nextPage, hasMore,abprops,test  } = route.params;
+    console.log('routerTypㅂe, lessonId, nextPage, hasMore ',routerType, lessonId, nextPage, hasMore,abprops )
+    console.log('testtesttest',test)
     const navigation = useNavigation();
     const [selectedMember, setSelectedMember] = useState(null);
     const [isProcessing, setIsProcessing] = useState(false);
@@ -23,25 +24,30 @@ function MemberSelectScreen(props) {
     const [page, setPage] = useState(nextPage || 0);
     const [hasMorePages, setHasMorePages] = useState(hasMore || false);
     const [isLoading, setIsLoading] = useState(false);
+    const [isClickBtn, setIsClickBtn]= useState(false);
     const goBack = () => {
         navigation.goBack();
     }
-
+    console.log('routerType',routerType)
     useEffect(() => {
         if(routerType ==='ableclass'){
+            console.log('수업목록ㅇㅇ')
             classMembers();
         }else{
+            console.log('목록ㅇㅇ')
             loadMembers();
         }
-    }, [routerType, classMembers, loadMembers]);
+    }, [routerType]); 
+    // }, [routerType, classMembers, loadMembers]);
 
     const classMembers = useCallback(async () => {
+        console.log('더호출할까 ?')
         if (!hasMore) return;
         setIsLoading(true);
         try {
-            const { id, date, startTime, endTime } = abprops;
-            const response = await getAssignableMembers({id, date, startTime, endTime ,page,size:10});
-            console.log('나호출123123 ??!',page)
+            const { id, date, startTime, endTime, trainerIdsString } = abprops;
+            const response = await getAssignableMembers({id, date, startTime, endTime ,trainerId:trainerIdsString ,page,size:10});
+            console.log('나호출123123 ??!',page,response)
             if (response && response.content.length < 10) {
                 setHasMorePages(false); // 데이터가 10개 미만이면 마지막 페이지로 간주
             }
@@ -60,7 +66,8 @@ function MemberSelectScreen(props) {
         } finally {
             setIsLoading(false);
         }
-    }, [hasMore, isLoading, lessonId, members, page]);
+    }, [abprops, hasMorePages, isLoading, page]);
+    // }, [hasMore, isLoading, lessonId, members, page]);
 console.log('vpdlwl',page)
 
     const loadMembers = useCallback(async () => {
@@ -89,10 +96,12 @@ console.log('vpdlwl',page)
         } finally {
             setIsLoading(false);
         }
-     }, [hasMore, isLoading, lessonId, members, page]);
+    }, [hasMorePages, isLoading, lessonId, page]); 
+    //  }, [hasMore, isLoading, lessonId, members, page]);
 
     const reservationBtn = async(lessonId,memberTicketId) => {
         if (isProcessing) return;
+        setIsClickBtn(true)
         setIsProcessing(true);
         if(routerType ==='ableclass'){
             console.log('callll123123')
@@ -129,7 +138,7 @@ console.log('vpdlwl',page)
                       );
                 }else if(error.code === 20608){
                     Alert.alert(
-                        "몰라 20608",
+                        "에러",
                         "USE_USING_SOON_TICKET_FAILED.",
                         [
                           { text: "확인", onPress: () => navigation.goBack()}
@@ -138,20 +147,23 @@ console.log('vpdlwl',page)
                 }
             } finally {
                 setIsProcessing(false);
+                setIsClickBtn(false);
             }
         }
     }
 
     const nextIcon = require('../../assets/img/rightIcon.png');
     const renderItem = useCallback(({ item }) => (
-        <MemberItem onPress={() => reservationBtn(lessonId, item.memberTicketId)}>
+        <MemberItem 
+        disabled={isClickBtn?true:false}
+        onPress={() => reservationBtn(lessonId, item.memberTicketId)}>
             <ContentContainer>
                 <NameText>{item.name || '알 수 없음'}</NameText>
                 <PhoneText>{formatPhoneNumber(item.phone)}</PhoneText>
             </ContentContainer>
             <AddNextIcon source={nextIcon}/>
         </MemberItem>
-    ), [lessonId]);
+    ), [isClickBtn,lessonId]);
 
 
     return (

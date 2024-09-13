@@ -134,3 +134,90 @@ const AddUserImg = styled(FastImage)`
   width: 30px;
   height: 30px;
 `
+
+
+// import React, { useState } from 'react';
+// import { View, Button, StyleSheet, TouchableWithoutFeedback, Text, TouchableOpacity } from 'react-native';
+// import DatePicker from 'react-native-date-picker';
+// import Modal from 'react-native-modal';
+
+// const ScheduleMainScreen = () => {
+//   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+//   const [date, setDate] = useState(new Date());
+
+//   const showDatePicker = () => {
+//     setDatePickerVisibility(true);
+//   };
+
+//   const hideDatePicker = () => {
+//     setDatePickerVisibility(false);
+//   };
+
+//   const handleConfirm = (selectedDate) => {
+//     setDate(selectedDate);
+//     hideDatePicker();
+//   };
+
+//   return (
+//     <View style={styles.container}>
+//       <Button title="Show Date Picker" onPress={showDatePicker} />
+
+//       <Modal
+//         isVisible={isDatePickerVisible}
+//         onBackdropPress={() => {}}  // 모달 외부 클릭 시 아무 동작도 하지 않도록 설정
+//         onBackButtonPress={() => {}}  // 백 버튼 눌렀을 때 닫히지 않도록 설정
+//         propagateSwipe={true}
+//       >
+//         <TouchableWithoutFeedback onPress={() => {}}>
+//           <View style={styles.modalContent}>
+//             <DatePicker
+//               locale="ko-KR"
+//               date={date}
+//               mode="date"
+//               onDateChange={setDate}  // date 변경시 state 업데이트
+//             />
+//             <View style={styles.buttonContainer}>
+//               <TouchableOpacity onPress={hideDatePicker} style={styles.button}>
+//                 <Text style={styles.buttonText}>취소</Text>
+//               </TouchableOpacity>
+//               <TouchableOpacity onPress={() => handleConfirm(date)} style={styles.button}>
+//                 <Text style={styles.buttonText}>확인</Text>
+//               </TouchableOpacity>
+//             </View>
+//           </View>
+//         </TouchableWithoutFeedback>
+//       </Modal>
+//     </View>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   modalContent: {
+//     backgroundColor: 'white',
+//     padding: 20,
+//     borderRadius: 10,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   buttonContainer: {
+//     flexDirection: 'row',
+//     marginTop: 20,
+//   },
+//   button: {
+//     marginHorizontal: 10,
+//     padding: 10,
+//     backgroundColor: '#2196F3',
+//     borderRadius: 5,
+//   },
+//   buttonText: {
+//     color: 'white',
+//   },
+// });
+
+// export default ScheduleMainScreen;
+

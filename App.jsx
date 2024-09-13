@@ -75,8 +75,11 @@ const configureNotifications = () => {
 
     onNotification: function (notification) {
       console.log("NOTIFICATION:", notification);
+      PushNotification.setApplicationIconBadgeNumber(0); // Android
+      PushNotificationIOS.setApplicationIconBadgeNumber(0); // iOS
       notification.finish(PushNotificationIOS.FetchResult.NoData);
     },
+    
 
     onAction: function (notification) {
       console.log("ACTION:", notification.action);
@@ -121,6 +124,7 @@ function App() {
 
     const unsubscribeMessage = messaging().onMessage(async remoteMessage => {
       const {title, body} = remoteMessage.notification;
+      console.log('remoteMessage.notification',remoteMessage.notification)
       PushNotification.localNotification({
         smallIcon: "ic_noti_icons",
         channelId: "fitable-trainer",

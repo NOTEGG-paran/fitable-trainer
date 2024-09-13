@@ -52,35 +52,35 @@ function ClassMemberDetailScreen(props) {
 
   console.log('나 넘어왔엉!', detailData, screenType, memberId, isPotential);
 //추가개발시 제거
-  const cancelReservationBtn = async id => {
-    try {
-      const response = await cancelLessonReservation(id);
-      if (response) {
-        Alert.alert('예약 취소', '예약이 취소되었습니다', [
-          {text: '확인', onPress: () => navigation.navigate('Schedule')},
-        ]);
-      } else {
-        return;
-      }
-    } catch (error) {
-      console.log('예약취소 에러', error);
-    }
-  };
+  // const cancelReservationBtn = async id => {
+  //   try {
+  //     const response = await cancelLessonReservation(id);
+  //     if (response) {
+  //       Alert.alert('예약 취소', '예약이 취소되었습니다', [
+  //         {text: '확인', onPress: () => navigation.navigate('Schedule')},
+  //       ]);
+  //     } else {
+  //       return;
+  //     }
+  //   } catch (error) {
+  //     console.log('예약취소 에러', error);
+  //   }
+  // };
 //추가개발시 제거
-  const postLessonAttendanceBtn = async id => {
-    try {
-      const response = await postLessonAttendance(id);
-      if (response) {
-        Alert.alert('출석', '출석으로 변경되었습니다', [
-          {text: '확인', onPress: () => navigation.navigate('Schedule')},
-        ]);
-      } else {
-        return;
-      }
-    } catch (error) {
-      console.log('출석처리 에러', error);
-    }
-  };
+  // const postLessonAttendanceBtn = async id => {
+  //   try {
+  //     const response = await postLessonAttendance(id);
+  //     if (response) {
+  //       Alert.alert('출석', '출석으로 변경되었습니다', [
+  //         {text: '확인', onPress: () => navigation.navigate('Schedule')},
+  //       ]);
+  //     } else {
+  //       return;
+  //     }
+  //   } catch (error) {
+  //     console.log('출석처리 에러', error);
+  //   }
+  // };
 
   const detailConsultScreen = async(id) => {
     // console.log('상세 id확인 path',id)
@@ -200,7 +200,7 @@ function ClassMemberDetailScreen(props) {
         </TicketContainer>
 
         {/* 추가개발시 주석처리 할 것 */}
-        {screenType !== 'memberDetail' && (
+        {/* {screenType !== 'memberDetail' && (
           <BtnContainer>
             {detailData?.isAvailableCancel && (
               <MemberBtn
@@ -217,9 +217,11 @@ function ClassMemberDetailScreen(props) {
               </MemberBtn>
             )}
           </BtnContainer>
-        )}
+        )} */}
 
-        {screenType === 'memberDetail' && (
+
+      </ScrollView>
+      {screenType === 'memberDetail' && (
           <PayAndContractContainer>
             {detailData.ticket && (
               <PayAndContractBox
@@ -283,7 +285,6 @@ function ClassMemberDetailScreen(props) {
             )}
           </PayAndContractContainer>
         )}
-      </ScrollView>
     </Container>
   );
 }
@@ -443,8 +444,8 @@ const ConsultDateText = styled.Text`
 const PayAndContractContainer = styled.View`
   display: flex;
   flex-direction: column;
-  background-color: ${COLORS.white};
-  padding: 20px;
+  /* background-color: ${COLORS.white}; */
+  padding: 10px 20px;
 `;
 
 const PayAndContractBox = styled.TouchableOpacity`

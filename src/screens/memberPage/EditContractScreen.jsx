@@ -1,6 +1,6 @@
 import {useNavigation, useRoute} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {ScrollView, TextInput, View,Platform} from 'react-native';
+import {ScrollView, TextInput, View,Platform,KeyboardAvoidingView} from 'react-native';
 import {useRecoilState} from 'recoil';
 import styled from 'styled-components/native';
 import GobackGrid from '../../components/grid/GobackGrid';
@@ -83,6 +83,7 @@ function EditContractScreen(props) {
   };
 
   return (
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{flex: 1}}>
     <MainContainer>
       <GobackGrid onPress={goBack}>계약서 작성</GobackGrid>
       <ScrollView
@@ -96,8 +97,8 @@ function EditContractScreen(props) {
         <View style={{gap: 20, marginTop: 30}}>
           {contract.selectedTickets?.map((item, index) => {
             return (
-              <>
-                <View>
+  
+                <View key={item.id || index}>
                   <TitleText>{`상품 ${index + 1}`}</TitleText>
 
                   <Container>
@@ -200,7 +201,7 @@ function EditContractScreen(props) {
 
                   <Divider />
                 </View>
-              </>
+
             );
           })}
         </View>
@@ -217,6 +218,7 @@ function EditContractScreen(props) {
         </BasicMainBtnNextBtn>
       </BasicMainBtnContainer>
     </MainContainer>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -232,7 +234,7 @@ const ContractTitle = styled.Text`
 
 
 const DateContainer = styled.View`
-  width: ${Platform.OS === 'ios' ? '64%' : '66%'};
+  width: ${Platform.OS === 'ios' ? '56%' : '66%'};
   flex-direction: row;
   background-color: ${COLORS.gray_100};
   align-items: center;

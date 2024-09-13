@@ -58,13 +58,16 @@ function ContractSuccess(props) {
         showsVerticalScrollIndicator={false}
         bounces={false}
         style={{marginBottom: 100}}>
-        <View style={{gap: 12, paddingVertical: 50}}>
+        <ContainerCenterView
+         style={{gap: 12, paddingVertical: 50,
+        }}
+         >
           <CompleteText>계약서를 저장했습니다</CompleteText>
-          <SubText>
-            핏에이블 관리자 페이지에서{`\n`}
-            계약서를 확인하실 수 있습니다
-          </SubText>
-        </View>
+          <SubTextContainer>
+          <SubText>핏에이블 관리자 페이지에서</SubText>
+          <SubText>계약서를 확인하실 수 있습니다</SubText>
+          </SubTextContainer>
+        </ContainerCenterView>
       </ScrollView>
 
       <BasicMainBtnContainer>
@@ -108,6 +111,12 @@ const BasicMainBtnNextBtnNextText = styled.Text`
   color: ${COLORS.white};
 `;
 
+const ContainerCenterView = styled.View`
+  margin-top: 150px;
+  justify-content: center;
+  align-items: center;
+`
+
 const TitleText = styled.Text`
   color: ${COLORS.sub};
   font-size: 20px;
@@ -122,10 +131,16 @@ const CompleteText = styled.Text`
   margin-bottom: 12px;
 `;
 
+const SubTextContainer = styled.View`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
 const SubText = styled.Text`
   color: ${COLORS.gray_400};
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 400;
   letter-spacing: -0.5px;
-  line-height: 30px;
+  line-height: 28px;
 `;

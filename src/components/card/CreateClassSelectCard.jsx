@@ -10,7 +10,7 @@ import { View } from 'react-native';
 
 function CreateClassSelectCard({children,selectState, setSelectState, imgIcon, state ,setState,type,updateClassData,maindata}) {
     // const {startDate=""}=state ||{};
-    console.log('Render CreateClassSelectCard11:', type,maindata);
+    // console.log('Render CreateClassSelectCard11:', type,maindata);
     const rightIcon = require('../../assets/img/colsdowngray.png');
     // console.log('state@',type,maindata)
     const screenWidth = Dimensions.get('window').width-80;
@@ -53,18 +53,24 @@ function CreateClassSelectCard({children,selectState, setSelectState, imgIcon, s
                              ref={pickerRef}
                             //  InputAccessoryView={() => null}
                             doneText='확인'
-                             onValueChange={(value) => {
+                            onValueChange={(value) => {
                                 setSelectState(value);
                                 const selectedLabel = transformedState.find(item => item.value === value)?.label;
-                                if(type === 'item'){
+                            
+                                if (type === 'item') {
                                     setState(value);
                                     updateClassData();
                                     return;
-                                }else{
+                                } else if (type === 'trainer') {
+                                    setState([value]); // 새로운 트레이너 ID를 배열로 저장하여 항상 하나의 아이디만 저장됨
+                                    updateClassData();
+                                    return;
+                                } else {
                                     setState(selectedLabel);
                                     updateClassData();
                                 }
-                              }}
+                            }}
+                            
                              value={selectState}
                              items={transformedState}
                              textInputProps={{ underlineColorAndroid: 'transparent'}}
@@ -73,7 +79,8 @@ function CreateClassSelectCard({children,selectState, setSelectState, imgIcon, s
                              placeholder={{
                                     label: type ==='name' ? '수업명을 선택해주세요' :
                                            type ==='item' ? '수업 종목을 선택해주세요' :
-                                           type ==='location' ? '수업장소를 선택해주세요' :'',
+                                           type ==='location' ? '수업장소를 선택해주세요' :
+                                           type ==='trainer' ? '강사를 선택해주세요' :'',
                                     value: null,
                              }}
                              style={{ inputIOS: { color: 'black' }, 
@@ -109,6 +116,10 @@ function CreateClassSelectCard({children,selectState, setSelectState, imgIcon, s
                                     setState(value);
                                     updateClassData();
                                     return;
+                                } else if (type === 'trainer') {
+                                    setState([value]); // 새로운 트레이너 ID를 배열로 저장하여 항상 하나의 아이디만 저장됨
+                                    updateClassData();
+                                    return;
                                 }else{
                                     setState(selectedLabel);
                                     updateClassData();
@@ -121,7 +132,8 @@ function CreateClassSelectCard({children,selectState, setSelectState, imgIcon, s
                              placeholder={{
                                     label: type ==='name' ? '수업명을 선택해주세요' :
                                            type ==='item' ? '수업 종목을 선택해주세요' :
-                                           type ==='location' ? '수업장소를 선택해주세요' :'',
+                                           type ==='location' ? '수업장소를 선택해주세요' :
+                                           type ==='trainer' ? '강사를 선택해주세요' :'',
                                     value: null,
                              }}
                              Icon={() => {

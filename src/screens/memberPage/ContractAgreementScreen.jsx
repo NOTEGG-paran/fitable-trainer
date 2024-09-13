@@ -379,8 +379,8 @@ const CheckBoxStyle = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   border-radius: 3px;
-  width: 20px;
-  height: 20px;
+  width: 26px;
+  height: 26px;
   ${props =>
     props.isActive
       ? css`

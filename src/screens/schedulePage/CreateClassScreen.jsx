@@ -16,7 +16,7 @@ import DaySelectBtnGrid from '../../components/grid/DaySelectBtnGrid';
 import SelectClassDateCard from '../../components/card/SelectClassDateCard';
 import {centerIdState,floatingState} from '../../store/atom';
 import { useRecoilState } from 'recoil';
-import {getClassNames, getClassItem, getClassPlaces ,registerClass, getAssignableMembers} from '../../api/classApi';
+import {getClassNames, getClassItem, getClassPlaces ,registerClass, getClassTrainer,getAssignableMembers} from '../../api/classApi';
 import ClassTimeSelectCard from '../../components/card/ClassTimeSelectCard';
 import RegisteredModal from '../../components/modal/RegisteredModal';
 import {formatDate} from '../../utils/CustomUtils';
@@ -40,6 +40,7 @@ function CreateClassScreen(props) {
     const [name, setName] = useState([]);
     const [item, setItem] = useState([]);
     const [location, setLocation] = useState([]);
+    const [trainers,setTrainers] = useState([])
 
     const [isLoading, setIsLoading] = useState(false);
     // 상태관리 값 
@@ -66,6 +67,7 @@ const [classData, setClassData] = useState({
 const [className, setClassName] = useState("");
 const [classItem, setClassItem] = useState("");
 const [classLocation, setClassLocation] = useState("");
+const [classTrainer, setClassTrainer] = useState([])
 //start
 const [date, setDate] = useState(new Date())
 const [edate, setEdate] = useState(new Date())
@@ -80,7 +82,7 @@ const [isLesson, setIsLesson] = useState(true);
 const [selectName, setSelectName] = useState(className);
 const [selectItem, setSelectItem] = useState(classItem);
 const [selectLocation, setSelectLocation] = useState(classLocation);
-
+const [selectTrainer,setSelectTrainer] = useState(classTrainer)
 console.log('className',className,classItem,classLocation)
 // schedules
 const [schedules, setSchedules] = useState([
@@ -114,7 +116,7 @@ const [schedules, setSchedules] = useState([
                 setItem(response)
             }
         }catch(error){
-            console.log('getClassNamesApi',error.response)
+            console.log('getClassItemApi',error.response)
         }
     }
 
@@ -125,7 +127,18 @@ const [schedules, setSchedules] = useState([
                 setLocation(response)
             }
         }catch(error){
-            console.log('getClassNamesApi',error.response)
+            console.log('getClassPlacesApi',error.response)
+        }
+    }
+
+    const getClassTrainerApi = async (centerId) => {
+        try{
+            const response = await getClassTrainer(centerId);
+            if(response){
+                setTrainers(response)
+            }
+        }catch(error){
+            console.log('getClassTrainerApi',error.response)
         }
     }
 
@@ -134,6 +147,7 @@ const [schedules, setSchedules] = useState([
             getClassNamesApi(centerId);
             getClassItemApi(centerId);
             getClassPlacesApi(centerId);
+            getClassTrainerApi(centerId)
         }
     }, []);
 
@@ -203,6 +217,7 @@ const [schedules, setSchedules] = useState([
             name: className || "",
             item: classItem !== null ? classItem : "",
             location: classLocation || "",
+            trainers:classTrainer ||[],
             schedulerType: selectedCheckBox,
             startDate: selectDate || "",
             schedules: [
@@ -221,6 +236,7 @@ const [schedules, setSchedules] = useState([
             isLesson: isLesson,
             name: className,
             location: classLocation,
+            trainers:classTrainer,
             schedulerType: selectedCheckBox,
             startDate: `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`,
             schedules: [
@@ -239,6 +255,7 @@ const [schedules, setSchedules] = useState([
             isLesson: true,
             name: className,
             location: classLocation,
+            trainers:classTrainer,
             schedulerType: selectedCheckBox,
             startDate: `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`,
             endDate: `${edate.getFullYear()}-${(edate.getMonth() + 1).toString().padStart(2, '0')}-${edate.getDate().toString().padStart(2, '0')}`,
@@ -285,6 +302,9 @@ const [schedules, setSchedules] = useState([
     const selectDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
 
     // 개인 수업 등록SINGLE
+    // const singleRegisterBtn = async(personalData, selectedCheckBox) => {
+    //     console.log('/fuckck',personalData)
+    // }
     const singleRegisterBtn = async(personalData, selectedCheckBox) => {
         console.log('Class data in test11111:', postPersonalSingleData);
         // setRegisteredModal(true);
@@ -384,7 +404,7 @@ const [schedules, setSchedules] = useState([
             (classItem === undefined || classItem === "" || classItem === null || classItem === "null" || classItem === "") ||
             (selectDate === undefined || selectDate === "") ||
             (startTime === undefined || startTime === "" || startTime === "null") ||
-            (endTime === undefined || endTime === "" || endTime === "null")
+            (endTime === undefined || endTime === "" || endTime === "null") 
         ) {
             return false;
         }
@@ -430,7 +450,8 @@ if (isInvalidSchedule) {
        if(
         (postPersonalSingleData.name === "" || postPersonalSingleData.name === undefined) || 
         (startTime === undefined || startTime === "" || startTime === "null") ||
-        (endTime === undefined || endTime === "" || endTime === "null") 
+        (endTime === undefined || endTime === "" || endTime === "null") ||
+        (classTrainer === undefined || classTrainer.length === 0 || classTrainer.includes(null))
        ){
         return false;
        }
@@ -458,9 +479,11 @@ if (isInvalidSchedule) {
               schedule.endTime !== ""
           );
         if(
-            (postPersonalSingleData.name === "" || postPersonalSingleData.name === undefined) || 
+            (postPersonalMultipleData.name === "" || postPersonalMultipleData.name === undefined) || 
             (selectDate === undefined || selectDate === "") ||
-            (edate === undefined || edate === "" || edate === "null") ||!isScheduleValid
+            (edate === undefined || edate === "" || edate === "null") ||!isScheduleValid ||
+            // (postPersonalMultipleData.trainers === undefined || postPersonalMultipleData.trainers.length === 0)
+            (classTrainer === undefined || classTrainer.length === 0 || classTrainer.includes(null))
         ){
                 return false;
         }
@@ -468,26 +491,30 @@ if (isInvalidSchedule) {
     }
 
     
-    const getAssignableMembersScreen = async(id, ableDate, startTime, endTime) => {
+    const getAssignableMembersScreen = async(id, ableDate, startTime, endTime,trainerIds) => {
+        console.log('gg확인용',id, ableDate, startTime, endTime,trainerIds)
         setIsLoading(true);
         const date = `${ableDate.getFullYear()}-${(ableDate.getMonth() + 1).toString().padStart(2, '0')}-${ableDate.getDate().toString().padStart(2, '0')}`
-        console.log('회원 배정 date확인 로그',id, date, startTime, endTime)
-        if(!date || !startTime || !endTime){
-            Alert.alert('날짜와 시간을 선택해주세요');
+        if(!date || !startTime || !endTime|| trainerIds.length===0|| trainerIds.includes(null)){
+            Alert.alert('날짜, 시간, 그리고 트레이너를 선택해주세요');
             setIsLoading(false);
         }else{
+            
             try{
-                const response = await getAssignableMembers({id, date, startTime, endTime,},0,10);
+                const trainerIdsString = trainerIds.join(',');
+                console.log('여기 데이터 탈까요 ?',trainerIdsString)
+                const response = await getAssignableMembers({id, date, startTime, endTime, trainerId: trainerIdsString,},0,10);
                 console.log('최초 회원 선택 응답',response.content.length)
+                console.log('response회원배정',response)
                 navigation.navigate('MemberSelect',{
                     selectData: response.content,
                     routerType:'ableclass',
                     nextPage: 1, 
                     hasMore: response.content.length === 10,
-                    abprops:{id, date, startTime, endTime}
+                    abprops:{id, date, startTime, endTime,trainerIdsString}
                 })
             }catch(error){
-                console.log('123err', error)
+                console.log('123err123123123', error.response)
             }finally{
                 setIsLoading(false);
             }
@@ -507,7 +534,7 @@ console.log('personalData',personalData)
 
     
     useEffect(() => {
-        console.log('Class data updated:', classData);
+        console.log('Class data updated:', classData,isActive);
         if(type === 'GROUP'){
             if(selectedCheckBox === 'SINGLE'){
                  setIsActive(isActiveFn());
@@ -523,7 +550,7 @@ console.log('personalData',personalData)
                  setIsActive(isPersonalMultipleActiveFn());
             }
         }
-    }, [className, classItem, classLocation, startDate, startTime, endTime, classData,schedules,selectedCheckBox]);
+    }, [className, classItem, classLocation, startDate, startTime, endTime, classData,schedules,selectedCheckBox,classTrainer]);
   
 
 const singlePersActive = (personalData) => {
@@ -570,6 +597,7 @@ const grupPersActive = (postData) => {
     const itemIcon = require('../../assets/img/itemIcon.png');
     const locationIcon = require('../../assets/img/locationIcon.png');
     const addBtnIcon = require('../../assets/img/pluscircle.png')
+    const trainerIcon = require('../../assets/img/trainerIcon.png')
     return (
         <>
         <MainContainer>
@@ -654,6 +682,11 @@ const grupPersActive = (postData) => {
                     }
 
                     <CreateClassSelectCard selectState={selectLocation} setSelectState={setSelectLocation} state={location} imgIcon={locationIcon} type="location" setState={setClassLocation} updateClassData={updateClassData}>장소(선택)</CreateClassSelectCard>
+                   
+                   {
+                    type==="PERSONAL" &&
+                    (<CreateClassSelectCard selectState={selectTrainer} setSelectState={setSelectTrainer} state={trainers} imgIcon={trainerIcon} type="trainer" setState={setClassTrainer} updateClassData={updateClassData}>강사</CreateClassSelectCard>)
+                   }
                     {/* 수정중 */}
                     {/* {
                         selectedCheckBox === 'SINGLE' && 
@@ -693,7 +726,7 @@ const grupPersActive = (postData) => {
                         ):(
                             <AssignMemberContainer 
                             disabled={isLoading}
-                            onPress={()=>getAssignableMembersScreen(centerId, date, startTime, endTime)}>
+                            onPress={()=>getAssignableMembersScreen(centerId, date, startTime, endTime,classTrainer)}>
                             <AddbtnBox>
                             <AddbtnIcon source={addBtnIcon}/>    
                             <LabelText>예약 회원</LabelText>
@@ -709,6 +742,7 @@ const grupPersActive = (postData) => {
         <CreateBtnContainer />
         <BasicMainBtn 
         isActive={isActive}
+        disabled={isActive}
         onPress={type === 'GROUP' ? ()=>groupRegisterBtn(postData, selectedCheckBox) : ()=>singleRegisterBtn(personalData, selectedCheckBox)}>등록하기</BasicMainBtn>
         </MainContainer>
         {

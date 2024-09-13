@@ -14,7 +14,7 @@ import { useRecoilState } from 'recoil';
 import { myPhoneState, isLoginState } from '../../store/atom';
 import {Alert, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import EncryptedStorage from 'react-native-encrypted-storage';
 function NewPassword(props) {
 
     const navigation = useNavigation();
@@ -62,8 +62,8 @@ function NewPassword(props) {
           if (response) {
                 console.log('비밀번호 변경 성공',response)
                 const { accessToken, refreshToken } = response;
-                await AsyncStorage.setItem("accessToken", accessToken);
-                await AsyncStorage.setItem("refreshToken", refreshToken);
+                await EncryptedStorage.setItem("accessToken", accessToken);
+                await EncryptedStorage.setItem("refreshToken", refreshToken);
                 setIsLoggedIn(true);
           } 
      } catch (error) {

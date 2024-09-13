@@ -20,7 +20,7 @@ function AccountScreen(props) {
 
     const [myInfo, setMyInfo] = useRecoilState(myinfoState);
 
-    const [name, setName] = useState('');
+    const [name, setName] = useState(myInfo.name);
     const [password, setPassword] = useState('');
     const [passwordCheck, setPasswordCheck] = useState('');
     const [passwordError, setPasswordError] = useState('');
@@ -59,25 +59,30 @@ function AccountScreen(props) {
   // 비밀번호 변경
 
   const infoChangeBtn = async (name, password) => {
-    // console.log('이름, 비밀번호 변경',name.length,name, password)
     const updatedName = name.length > 0 ? name : myInfo.name;
-    const updatedPassword = password; 
-    console.log('변경된 값 확인',updatedName, updatedPassword)
-    try{
-        const response = await updateMyInfo({name:updatedName, password:updatedPassword});
-        console.log('응답확인',response)
-        if(response){
+    const requestBody = {
+        name: updatedName
+    };
+
+    if (password) {
+        requestBody.password = password;
+    }
+
+    try {
+        const response = await updateMyInfo(requestBody);
+        console.log('응답확인', response);
+        if (response) {
             setMyInfo({...myInfo, name: updatedName});
             Alert.alert('변경 완료', '변경되었습니다', [{text: '확인', onPress: () => navigation.goBack()}]);
         }
-    }
-    catch(error){
-        if(error.code === 10106){
-            console.error('이error:', error.code === 10106,error);
+    } catch (error) {
+        if (error.code === 10106) {
+            console.error('이error:', error.code === 10106, error);
             Alert.alert('오류', '다시 한번 확인해주세요!', [{text: '확인', onPress: () => console.log('OK Pressed')}]);
         }
     }
 }
+
 
 
     const goBack = () => {

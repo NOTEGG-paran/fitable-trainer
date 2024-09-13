@@ -90,5 +90,6 @@ export const contractState = atom({
     contractTemplate: {},
     selectedTickets: [],
     updatedSelectedTickets: null,
+    addReceipts:[],
   },
 });

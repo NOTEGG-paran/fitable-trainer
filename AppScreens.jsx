@@ -23,6 +23,8 @@ import SignContractScreen from './src/screens/memberPage/SignContractScreen';
 import SignScreen from './src/screens/memberPage/SignScreen';
 import ContractSuccess from './src/screens/memberPage/ContractSuccess';
 import WebViewScreen from './src/screens/myPage/WebViewScreen';
+import AddReceiptScreen from './src/screens/memberPage/AddReceiptScreen';
+import SaveContractScreen from './src/screens/memberPage/SaveContractScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -94,6 +96,8 @@ function AppScreens(props) {
           name="AgreementContract"
           component={ContractAgreementScreen}
         />
+        <Stack.Screen name="AddReceipt" component={AddReceiptScreen} />
+        <Stack.Screen name='ReceiptHistory' component={SaveContractScreen} />
         <Stack.Screen name="SignContract" component={SignContractScreen} />
         <Stack.Screen name="Sign" component={SignScreen} />
         <Stack.Screen name="ContractSuccess" component={ContractSuccess} />

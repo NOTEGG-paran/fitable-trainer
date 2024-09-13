@@ -7,7 +7,7 @@ function LessonsStatusModal({modalVisible, closeModal,setShowAlertModal,showAler
 
 
     const openLessonModal = (type) => {
-        console.log('dfadsf',setShowAlertModal,showAlertModal)
+        console.log('dfadsf',showAlertModal)
         setShowAlertModal(true)
         setStatusType(type)
         closeModal()

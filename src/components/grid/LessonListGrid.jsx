@@ -15,15 +15,17 @@ function LessonListGrid({lessonList,loadMore}) {
             if(response){
                 navigation.navigate('LessonDetail', 
                 {
-                    lessonDetail: response,
-                    
+                    // lessonDetail: response,
+                    // 추가개발시 주석 제거
+                    lessonDetailData: response,
+                    lessonId:id,
                 });
             }
         }catch(error){
             console.log('error 뜸', error)
         }
     }
-    console.log('lessonList',lessonList)
+    console.log('lessonList123',lessonList)
     const nextIcon = require('../../assets/img/rightIcon.png');
     const personal = require('../../assets/img/personal_s.png');
     const group = require('../../assets/img/group_s.png');

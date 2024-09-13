@@ -23,7 +23,7 @@ function DetailLessonCommonGrid({lessonDetail,routerType}) {
                     selectData: response.content,
                     lessonId: id,
                     nextPage: 1, 
-                    hasMore: response.content.length === 10
+                    hasMore: response.content.length === 10,
                 })
             }catch{
                 console.log('5err', error)

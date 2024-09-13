@@ -86,36 +86,6 @@ console.log('currentMonth',currentMonth,selected)
 
   }, [todayString, centerId,availableDates]);
 
-//   const handleDayPress = useCallback(day => {
-//     // 선택된 날짜가 오늘 날짜인지 확인
-//     if (day.dateString === todayString) {
-//         setSelected(todayString);
-//     } else {
-//         setSelected(day.dateString);
-//     }
-
-//     // 현재 날짜와 선택된 날짜의 달을 비교
-//     const selectedDate = new Date(day.dateString);
-//     const selectedMonth = `${selectedDate.getFullYear()}.${String(selectedDate.getMonth() + 1).padStart(2, '0')}`;
-    
-//     if (currentMonth !== selectedMonth) {
-//         setCurrentMonth(selectedMonth);
-//     }
-
-//     if (centerId) {
-//         getLessonList(centerId, day.dateString)
-//             .then(data => {
-//                 setLessonList(data.content);
-//             })
-//             .catch(error => {
-//                 console.error("Error fetching lesson list:", error);
-//             });
-//     }
-// }, [todayString, centerId, currentMonth]);
-
-
-// console.log('centerIdcenterIdcenterId',centerId)
-
   useEffect(() => {
     // 현재 날짜 정보를 가져와서 초기 월과 년도 설정
     const currentDate = new Date();
@@ -229,11 +199,21 @@ useEffect(() => {
         hideArrows
         markedDates={{
           ...availableDates,
-          ...{[selected]: { selected: true,selectedColor: COLORS.sub,selectedTextColor: COLORS.main  }},
-          ...{[todayString]: selected === todayString ? 
-            { selected: true, selectedColor: COLORS.sub, selectedTextColor: COLORS.main, dotColor: '#FF7A00', marked: true } : 
-            { dotColor: '#FF7A00', marked: true }
-            }, 
+          [todayString]: {
+            ...(availableDates[todayString] || {}),
+            marked: true,
+            dotColor: '#FF7A00', // 마크 색상
+          },
+          [selected]: {
+            selected: true,
+            selectedColor: COLORS.sub,
+            selectedTextColor: COLORS.main,
+            disableTouchEvent: true,
+            ...(selected === todayString && { // 오늘 날짜일 경우 주황색 닷 추가
+              marked: true,
+              dotColor: '#FF7A00',
+            }),
+          },
         }}
           onDayPress={handleDayPress}
           theme={themeStyled}

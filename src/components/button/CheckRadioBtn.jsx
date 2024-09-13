@@ -46,5 +46,5 @@ const CheckText = styled.Text`
 font-weight: 400;
 line-height: 22.40px;
     color: ${props => props.isChecked ? COLORS.sub : COLORS.gray_300};
-    margin-left: 12px;
+    margin-left: 6px;
 `;
