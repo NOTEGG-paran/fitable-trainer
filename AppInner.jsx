@@ -4,14 +4,11 @@ import AppScreens from './AppScreens';
 import {useRecoilState} from 'recoil';
 import {isLoginState} from './src/store/atom';
 import {useEffect, useState} from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ActivityIndicator, View } from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import SplashScreen from './src/screens/splash/SplashScreen';
-import {autoLoginApi} from './src/api/authApi';
+import {deletefcmToken} from './src/api/mypageApi';
 import { Text, TextInput } from 'react-native';
-import {checkAccessTokenValidity} from './src/utils/CustomUtils';
-import {refreshTokenFn} from './src/api/customAxios';
+import customAxios from './src/api/customAxios';
 // 전역 텍스트 설정
 Text.defaultProps = Text.defaultProps || {};
 Text.defaultProps.allowFontScaling = false;
@@ -22,25 +19,34 @@ function AppInner() {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoginState);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const checkLoginStatus = async () => {
-      try {
-        const accessToken = await EncryptedStorage.getItem('accessToken');
-        const refreshToken = await EncryptedStorage.getItem('refreshToken');
-        if (accessToken && refreshToken) {
-          setIsLoggedIn(true);
-        } else {
-          setIsLoggedIn(false);
-        }
-      } catch (error) {
-        console.error('자동 로그인 오류:', error);
-        setIsLoggedIn(false);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const handleLogout = async () => {
+    await deletefcmToken()
+    setIsLoggedIn(false); // Recoil 상태 업데이트 (로그아웃)
+  };
 
-    checkLoginStatus();
+  const initializeApp = async () => {
+    try {
+      const accessToken = await EncryptedStorage.getItem('accessToken');
+      const refreshToken = await EncryptedStorage.getItem('refreshToken');
+
+      if (accessToken && refreshToken) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+
+    } catch (error) {
+      console.error('초기화 중 오류 발생:', error);
+      setIsLoggedIn(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    initializeApp();
+    // customAxios에 로그아웃 함수 전달
+    customAxios.setLogoutHandler(handleLogout);
   }, []);
 
   console.log('isLoggedIn:', isLoggedIn);

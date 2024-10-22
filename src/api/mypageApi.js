@@ -69,3 +69,13 @@ export const setPushNotification = async(data) =>{
         throw error.response.data;
     }
 }
+
+// 토큰삭제
+export const deletefcmToken= async (alarmId) => {
+    try {
+        const response = await customAxios.delete("/api/trainers/v1/fcmToken");
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}

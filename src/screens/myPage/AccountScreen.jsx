@@ -150,9 +150,20 @@ function AccountScreen(props) {
             </EditNumberBtn>
 
             <CertifiactionBtn 
-            onPress={()=>infoChangeBtn(name, password)}
-            isActive={name.length > 0 || (password.length > 7 && passwordCheck.length > 7 && isSamePassword)}
-            >확인</CertifiactionBtn>
+    onPress={() => {
+        if (isSamePassword) { // 비밀번호가 일치할 때만 호출
+            infoChangeBtn(name, password);
+        } else {
+            Alert.alert('비밀번호 불일치', '비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+        }
+    }}
+    isActive={
+        name.length > 0 &&
+        password.length > 7 &&
+        passwordCheck.length > 7 &&
+        isSamePassword // 비밀번호가 일치하는지 확인
+    }
+>확인</CertifiactionBtn>
         </MainContainer>
         </TouchableWithoutFeedback>
     );

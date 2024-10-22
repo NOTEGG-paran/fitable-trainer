@@ -57,21 +57,22 @@ function ScheduleMainScreen(props) {
 
     console.log('isAvailable1',isAvailable,'centerId',centerId)
 
-    useEffect(() => {
-        if (openFloatingModal) {
-          navigation.setOptions({
-            headerStyle: {
-              backgroundColor: "rgba(0, 0, 0, 0.75)",
-            },
-          });
-        } else {
-          navigation.setOptions({
-            headerStyle: {
-              backgroundColor: COLORS.white,
-            },
-          });
-        }
-      }, [openFloatingModal]);
+
+    // useEffect(() => {
+    //     if (openFloatingModal) {
+    //       navigation.setOptions({
+    //         headerStyle: {
+    //           backgroundColor: "rgba(0, 0, 0, 0.75)",
+    //         },
+    //       });
+    //     } else {
+    //       navigation.setOptions({
+    //         headerStyle: {
+    //           backgroundColor: COLORS.white,
+    //         },
+    //       });
+    //     }
+    //   }, [openFloatingModal]);
       
 
 
@@ -105,7 +106,9 @@ function ScheduleMainScreen(props) {
             <FloatingBtn onPress={toggleFloatingModal} isOpen={openFloatingModal}/>
         )
     }
-    {openFloatingModal && <FloatingModal isOpen={openFloatingModal} closeModal={toggleFloatingModal}/>}
+    {openFloatingModal && <FloatingModal isOpen={openFloatingModal} closeModal={toggleFloatingModal}
+    setOpenFloatingModal={setOpenFloatingModal}
+    />}
     </>
     );
 }

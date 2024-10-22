@@ -68,6 +68,6 @@ const InfoTextInput = styled(TextInput).attrs(() => ({
     color: ${COLORS.sub};
     font-size: 15px;
     font-weight: 500;
-    line-height: 22.40px;
+    /* line-height: 22.40px; */
     font-family: 'Pretendard-Regular';
 `;

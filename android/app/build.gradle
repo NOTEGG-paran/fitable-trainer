@@ -79,8 +79,8 @@ android {
         applicationId "com.fitabletrainer"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 26
-        versionName "1.0.8"
+        versionCode 30
+        versionName "1.1.1"
          resValue "string", "build_config_package", "com.fitabletrainer"
     }
     signingConfigs {

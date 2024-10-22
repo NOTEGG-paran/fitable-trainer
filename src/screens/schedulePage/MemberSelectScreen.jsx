@@ -14,8 +14,8 @@ import FastImage from 'react-native-fast-image';
 import {getLessonReservationMembers} from'../../api/lessonApi';
 function MemberSelectScreen(props) {
     const route = useRoute();
-    const { selectData, routerType, lessonId, nextPage, hasMore,abprops,test  } = route.params;
-    console.log('routerTypㅂe, lessonId, nextPage, hasMore ',routerType, lessonId, nextPage, hasMore,abprops )
+    const { selectData, routerType, lessonId, nextPage, hasMore,abprops,test,onAssignMember  } = route.params;
+    console.log('routerTypㅂe, lessonId, nextPage, hasMore ',routerType, lessonId, nextPage, hasMore,abprops,onAssignMember )
     console.log('testtesttest',test)
     const navigation = useNavigation();
     const [selectedMember, setSelectedMember] = useState(null);
@@ -107,6 +107,7 @@ console.log('vpdlwl',page)
             console.log('callll123123')
             const selected = selectData.find(member => member.memberTicketId === memberTicketId);
             setSelectedMember(selected);
+            onAssignMember()
             navigation.navigate('CreateClass', { selectedMember: selected, type:'PERSONAL' });
             setIsProcessing(false);
         }else if(routerType ==='class'){

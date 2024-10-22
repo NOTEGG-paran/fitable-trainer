@@ -161,7 +161,7 @@ const resetState = () => {
                 <DetailContentContainer>
                     <DetailContent>
                     <DetailContentTitle>수업명</DetailContentTitle>
-                    <DetailContentText>{lessonDetail?.name}</DetailContentText>
+                    <DetailContentText>{lessonDetail?.name ? lessonDetail.name : '-'}</DetailContentText>
                     </DetailContent>
 
                     <DetailContent>

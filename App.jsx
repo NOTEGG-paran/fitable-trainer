@@ -75,8 +75,6 @@ const configureNotifications = () => {
 
     onNotification: function (notification) {
       console.log("NOTIFICATION:", notification);
-      PushNotification.setApplicationIconBadgeNumber(0); // Android
-      PushNotificationIOS.setApplicationIconBadgeNumber(0); // iOS
       notification.finish(PushNotificationIOS.FetchResult.NoData);
     },
     
@@ -133,6 +131,7 @@ function App() {
         playSound: true,
         soundName: 'default',
         color: "#000000",
+        badge: badgeCount,
       });
     });
 

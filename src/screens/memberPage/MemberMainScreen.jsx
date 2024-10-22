@@ -122,7 +122,7 @@ function MemberMainScreen(props) {
 
     const UIComponent = 
     Platform.OS === 'ios' ?
-    CenterListHeaderGrid : AndroidStyled;
+    IosStyled : AndroidStyled;
 
     return (
         <>
@@ -212,6 +212,9 @@ const AndroidStyled = styled.View`
     flex-direction:row;
     align-items:center;
     justify-content:space-between;
+`
+
+const IosStyled = styled.View`
 `
 
 export const GridLine = styled.View`

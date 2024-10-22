@@ -109,7 +109,7 @@ function MainTabScreen(props) {
           },
           headerShown: false,
         }}
-        tabBar={(props) => (openFloatingModal ? null : <BottomTabBar {...props} />)}
+        // tabBar={(props) => (openFloatingModal ? null : <BottomTabBar {...props} />)}
       >
         <Tab.Screen name="Schedule" component={ScheduleScreens} 
           options={{

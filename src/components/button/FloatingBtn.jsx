@@ -51,7 +51,7 @@ const FloatingButtonContainer = styled.View`
   /* bottom: 40px; */
   bottom: ${props => (props.isOpen ? '120px' : '40px')};
   right: 20px;
-  z-index: 15;
+  z-index: 20;
 `;
 
 const FloatingButtonTouchable = styled.TouchableOpacity`

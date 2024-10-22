@@ -4,7 +4,9 @@ import { COLORS } from '../../constants/color';
 import { Image,Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
-function FloatingModal({isOpen,closeModal}) {
+import { Modal, ScrollView,Keyboard,TouchableWithoutFeedback,KeyboardAvoidingView, Platform,Alert } from 'react-native';
+import FloatingBtn from '../button/FloatingBtn';
+function FloatingModal({isOpen,closeModal,setOpenFloatingModal}) {
 
     const navigation = useNavigation();
 
@@ -13,12 +15,17 @@ function FloatingModal({isOpen,closeModal}) {
 
     const goClassScreen = (type) =>{
         console.log('111',type)
+        setOpenFloatingModal(false)
         navigation.navigate('CreateClass',{type:type})
     }
 
    
 
     return (
+        <Modal
+        transparent={true}
+        animationType="none"
+        onRequestClose={() => {}}>
         <ModalBackground
         onPress={closeModal}
         activeOpacity={1}
@@ -46,11 +53,13 @@ function FloatingModal({isOpen,closeModal}) {
                 </FloatingButtonTouchable>
             </FloatingContentsContainer>
             </FloatingBtnBox>
-
             </FloatingButtonContainer>
+
+            <FloatingBtn onPress={closeModal} isOpen={isOpen}/>
 
           
         </ModalBackground>
+        </Modal>
     );
 }
 
@@ -63,7 +72,8 @@ const ModalBackground = styled.TouchableOpacity`
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.75);
-    z-index: 5;
+    z-index: 1;
+    
 `;
 const FloatingBtnBox = styled.View`
    margin-bottom: 20px;

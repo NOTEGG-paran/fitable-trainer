@@ -93,6 +93,7 @@ const [schedules, setSchedules] = useState([
     },
 ]);
 
+const [isAssigningMember, setIsAssigningMember] = useState(false);
 
 
     //api
@@ -319,7 +320,7 @@ const [schedules, setSchedules] = useState([
                     setRegisteredModal(true);
                 }
             } catch (error) {
-                console.log('err', error.response);
+                console.log('err', error.response.data);
                 if(error.response.data.code === 20919){
                     Alert.alert('이미 등록된 일정이 있어 수업을 등록할 수 없습니다.\n일정을 다시 한 번 확인해주세요.')
                 }else if(error.response.data.code === 20808){
@@ -448,7 +449,7 @@ if (isInvalidSchedule) {
 
     const isPersonalActiveFn = () => {
        if(
-        (postPersonalSingleData.name === "" || postPersonalSingleData.name === undefined) || 
+        // (postPersonalSingleData.name === "" || postPersonalSingleData.name === undefined) || 
         (startTime === undefined || startTime === "" || startTime === "null") ||
         (endTime === undefined || endTime === "" || endTime === "null") ||
         (classTrainer === undefined || classTrainer.length === 0 || classTrainer.includes(null))
@@ -479,7 +480,7 @@ if (isInvalidSchedule) {
               schedule.endTime !== ""
           );
         if(
-            (postPersonalMultipleData.name === "" || postPersonalMultipleData.name === undefined) || 
+            // (postPersonalMultipleData.name === "" || postPersonalMultipleData.name === undefined) || 
             (selectDate === undefined || selectDate === "") ||
             (edate === undefined || edate === "" || edate === "null") ||!isScheduleValid ||
             // (postPersonalMultipleData.trainers === undefined || postPersonalMultipleData.trainers.length === 0)
@@ -493,6 +494,7 @@ if (isInvalidSchedule) {
     
     const getAssignableMembersScreen = async(id, ableDate, startTime, endTime,trainerIds) => {
         console.log('gg확인용',id, ableDate, startTime, endTime,trainerIds)
+
         setIsLoading(true);
         const date = `${ableDate.getFullYear()}-${(ableDate.getMonth() + 1).toString().padStart(2, '0')}-${ableDate.getDate().toString().padStart(2, '0')}`
         if(!date || !startTime || !endTime|| trainerIds.length===0|| trainerIds.includes(null)){
@@ -511,7 +513,8 @@ if (isInvalidSchedule) {
                     routerType:'ableclass',
                     nextPage: 1, 
                     hasMore: response.content.length === 10,
-                    abprops:{id, date, startTime, endTime,trainerIdsString}
+                    abprops:{id, date, startTime, endTime,trainerIdsString},
+                    onAssignMember: () => setIsAssigningMember(true)
                 })
             }catch(error){
                 console.log('123err123123123', error.response)
@@ -524,6 +527,7 @@ console.log('personalData',personalData)
     
     //맴버 삭제 버튼
     const handleDeleteBtn = () =>{
+        setIsAssigningMember(false);
         setMember(null)
     }
     useEffect(() => {
@@ -628,6 +632,7 @@ const grupPersActive = (postData) => {
                             isLesson={isLesson}
                             setIsLesson={setIsLesson}
                             setMember={setMember}
+                            isAssigningMember={isAssigningMember}
                             />
                         )
                     }
@@ -664,7 +669,7 @@ const grupPersActive = (postData) => {
                     </>):(
                     // 1:1 수업
                     <>
-                    <CreateClassSelectCard selectState={selectName} setSelectState={setSelectName} state={name} imgIcon={classIcon} type="name" setState={setClassName} updateClassData={updateClassData}>수업명</CreateClassSelectCard>
+                    <CreateClassSelectCard selectState={selectName} setSelectState={setSelectName} state={name} imgIcon={classIcon} type="name" setState={setClassName} updateClassData={updateClassData}>수업명(선택)</CreateClassSelectCard>
 
                     
                     {

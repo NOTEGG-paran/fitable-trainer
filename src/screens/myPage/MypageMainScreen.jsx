@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState, useCallback } from 'react';
 import {MainContainer, GridLine} from '../../style/gridStyled'
 import { useRecoilState } from 'recoil';
-import { getMyInfo } from '../../api/mypageApi';
+import { getMyInfo,deletefcmToken } from '../../api/mypageApi';
 import { myinfoState ,isLoginState } from '../../store/atom';
 import MyProfileHeaderGrid from '../../components/grid/MyProfileHeaderGrid';
 import MySettingListBtnGrid from '../../components/grid/MySettingListBtnGrid';
@@ -65,6 +65,7 @@ function MypageMainScreen(props) {
               text: "예",
               onPress: async () => {
                 try {
+                  await deletefcmToken()
                   await EncryptedStorage.removeItem("accessToken");
                   await EncryptedStorage.removeItem("refreshToken");
                   setIsLoggedIn(false);
