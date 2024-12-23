@@ -6,7 +6,6 @@ import {isLoginState} from './src/store/atom';
 import {useEffect, useState} from 'react';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import SplashScreen from './src/screens/splash/SplashScreen';
-import {deletefcmToken} from './src/api/mypageApi';
 import { Text, TextInput } from 'react-native';
 import customAxios from './src/api/customAxios';
 // 전역 텍스트 설정
@@ -20,7 +19,7 @@ function AppInner() {
   const [isLoading, setIsLoading] = useState(true);
 
   const handleLogout = async () => {
-    await deletefcmToken()
+    // await deletefcmToken()
     setIsLoggedIn(false); // Recoil 상태 업데이트 (로그아웃)
   };
 

@@ -7,7 +7,6 @@ import MypageMainScreen from './src/screens/myPage/MypageMainScreen';
 import AlarmMainScreen from './src/screens/alarmPage/AlarmMainScreen';
 import { useRecoilValue } from 'recoil';
 import {floatingState} from './src/store/atom'
-import { BottomTabBar } from '@react-navigation/bottom-tabs';
 import FastImage from 'react-native-fast-image'
 
 const Tab = createBottomTabNavigator();
