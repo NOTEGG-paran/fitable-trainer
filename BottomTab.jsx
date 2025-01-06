@@ -1,3 +1,31 @@
+/**
+ * 1. 프로젝트명: 핏에이블 강사앱
+ * 2. 파일명: BottomTab.jsx
+ * 3. **설명**:
+ *    - 앱의 메인 하단 탭 네비게이션을 구성하는 파일.
+ *    - 각 탭에 스케줄, 회원 관리, 알림, 마이페이지 네비게이션 스택을 설정.
+ *
+ * 4. **주요 로직**:
+ *    - **하단 탭 네비게이션**:
+ *      - `ScheduleScreens`: 스케줄 관련 화면 스택 구성.
+ *      - `MemberScreens`: 회원 관리 관련 화면 스택 구성.
+ *      - `AlarmScreens`: 알림 관련 화면 스택 구성.
+ *      - `MyMainScreen`: 마이페이지 관련 화면 스택 구성.
+ *    - **탭 스타일링 및 아이콘 설정**:
+ *      - 탭 선택 여부에 따라 아이콘 변경.
+ *      - 선택된 탭의 텍스트와 아이콘 강조 표시.
+ *
+ * 5. **주요 기능**:
+ *    - **탭 네비게이션**:
+ *      - `createBottomTabNavigator`로 네비게이션 탭 설정.
+ *      - 각 탭에 스택 네비게이터를 연결하여 화면 전환 관리.
+ *    - **스타일 및 사용자 경험**:
+ *      - `tabBarStyle` 및 `tabBarIcon`을 통해 UI와 UX 강화.
+ *      - 아이콘과 텍스트 스타일링으로 가독성과 편의성 제공.
+ *
+ */
+
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { COLORS } from './src/constants/color';

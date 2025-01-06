@@ -1,9 +1,7 @@
 import React from 'react';
 import {COLORS} from '../../constants/color';
 import styled from 'styled-components/native';
-import {ScrollView, Title,Platform} from 'react-native';
-import RNPickerSelect from 'react-native-picker-select';
-import FastImage from 'react-native-fast-image';
+
 
 
 function ReceiptNoneTitle({placeholder,value,onChangeText,maxLength}) {

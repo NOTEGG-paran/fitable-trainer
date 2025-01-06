@@ -1,3 +1,44 @@
+/**
+ * 1. 프로젝트명: 핏에이블 강사앱
+ * 2. 파일명: CenterListHeaderGrid.js
+ * 3. **설명**:
+ *    - 센터 목록을 표시하고 선택할 수 있는 헤더 컴포넌트.
+ *    - iOS와 Android 플랫폼에 따라 다른 UI와 동작을 제공.
+ *    - AsyncStorage를 사용해 사용자가 선택한 센터 ID를 저장 및 관리.
+ *    - 재사용 컴포넌트 참고
+ * 
+ * 4. **주요 로직**:
+ *    - **센터 목록 및 ID 관리**:
+ *      - `centerList`와 `centerId`를 Recoil 상태로 관리.
+ *      - AsyncStorage를 활용하여 선택된 센터 ID를 저장하고 복구.
+ *    - **센터 선택**:
+ *      - `RNPickerSelect`를 사용하여 센터 선택 UI 구현.
+ *      - iOS와 Android에서 각각 다른 UI 제공.
+ *    - **선택한 센터 업데이트**:
+ *      - `handleDonePress`: 선택한 센터를 업데이트하고 AsyncStorage에 저장.
+ *      - `onCenterChange`: 선택된 센터에 따라 Recoil 상태 및 목록 업데이트.
+ *
+ * 5. **주요 기능**:
+ *    - **센터 목록 표시**:
+ *      - 센터 목록이 없을 경우 "연동된 센터가 없습니다" 메시지 표시.
+ *    - **센터 선택**:
+ *      - `RNPickerSelect`를 사용하여 드롭다운 방식으로 센터 선택 가능.
+ *    - **플랫폼별 UI 제공**:
+ *      - iOS와 Android에서 각각 다른 스타일로 드롭다운 렌더링.
+ *    - **AsyncStorage 사용**:
+ *      - 선택된 센터 ID를 저장 및 복구하여 지속적인 사용자 경험 제공.
+ *
+ * 6. **주요 상태 및 로직**:
+ *    - **상태**:
+ *      - `centerList`: 현재 사용자가 접근 가능한 센터 목록.
+ *      - `centerId`: 현재 선택된 센터 ID.
+ *      - `selectedCenterId`: 드롭다운에서 임시로 선택한 센터 ID.
+ *    - **로직**:
+ *      - `handleDonePress`: 선택된 센터 업데이트 및 AsyncStorage에 저장.
+ *      - `onCenterChange`: Android에서 센터 변경 시 호출되는 콜백.
+ *
+ */
+
 import styled from 'styled-components/native';
 import { COLORS } from '../../constants/color';
 import { useRecoilState } from 'recoil';

@@ -1,3 +1,18 @@
+/**
+ * 1. **프로젝트명**: 핏에이블 강사앱
+ * 2. **파일명**: ContractScreen.js
+ * 3. **설명**: 
+ *    - 계약서 작성 화면으로, 회원과 연결된 계약서를 선택하거나 새 계약서를 작성하기 전에 제공된 계약서 템플릿을 선택합니다.
+ * 4. **주요 로직**:
+ *    - `getMemberContractList` API를 호출하여 현재 센터의 등록된 계약서 리스트를 가져옵니다.
+ *    - 선택된 계약서를 `Recoil`의 `contractState`에 저장합니다.
+ *    - "이용권 선택" 버튼은 계약서 선택 여부에 따라 활성화/비활성화됩니다.
+ * 5. **주요 기능**:
+ *    - 계약서 리스트를 표시.
+ *    - 계약서 선택 및 상태 관리.
+ *    - "이용권 선택" 버튼을 통한 다음 화면으로 이동.
+ */
+
 import React from 'react';
 import {MainContainer} from '../../style/gridStyled';
 import GobackGrid from '../../components/grid/GobackGrid';

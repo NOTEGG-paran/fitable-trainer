@@ -1,3 +1,18 @@
+/**
+ * 1. **프로젝트명**: 핏에이블 강사앱
+ * 2. **파일명**: TermsScreen.js
+ * 3. **설명**:
+ *    - 이용약관 및 개인정보처리방침 화면으로, 관련 문서를 열람할 수 있는 링크 제공.
+ *    - Android와 iOS의 동작 방식 차이에 따라 링크를 처리.
+ *
+ * 4. **주요 로직**:
+ *    - **링크 열기**:
+ *      - `Linking.canOpenURL`로 URL 유효성을 검사 후 브라우저로 열기.
+ *      - Android에서는 `navigation.navigate`를 통해 WebView 화면으로 이동.
+ *
+ */
+
+
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import {MainContainer} from '../../style/gridStyled'

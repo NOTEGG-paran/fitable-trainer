@@ -1,3 +1,9 @@
+/**
+ * 1. 프로젝트명: 핏에이블 강사앱
+ * 2. 파일명: DetailLessonCommonGridadd입니다.js
+ * 3. **설명**:
+ *    - 추가개발용입니다. 현 컴포넌트로 사용중임
+ */
 import styled from 'styled-components/native';
 import { COLORS } from '../../constants/color';
 import { useNavigation } from '@react-navigation/native';

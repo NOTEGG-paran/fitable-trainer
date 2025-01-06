@@ -1,3 +1,14 @@
+/**
+ * 1. 프로젝트명: 핏에이블 강사앱
+ * 2. 파일명: AlarmLessonDetailScreen.js
+ * 3. **설명**:
+ *    - 알림에서 클릭한 수업의 상세 정보를 표시하는 화면.
+ *    - 수업 상세 데이터를 기반으로 정보와 상태를 관리하며, 상세 화면 컴포넌트를 포함.
+ *
+ *
+ */
+
+
 import { useRoute } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 import {MainContainer} from '../../style/gridStyled'

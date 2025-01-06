@@ -1,3 +1,18 @@
+/**
+ * 1. **프로젝트명**: 핏에이블 강사앱
+ * 2. **파일명**: ContractSuccess.js
+ * 3. **설명**: 
+ *    - 계약서 작성 완료 후 사용자에게 성공 메시지를 보여주고, 계약 관련 데이터를 초기화한 뒤 특정 화면으로 이동할 수 있도록 구성된 화면.
+ * 4. **주요 로직**:
+ *    - `getMemberDetail` API 호출을 통해 회원의 상세 정보를 가져옵니다.
+ *    - `Recoil`의 `contractState`를 초기화하여 계약서 작성 데이터를 리셋합니다.
+ *    - "계약서 작성 마치기" 버튼 클릭 시 회원 상세 화면으로 이동합니다.
+ * 5. **주요 기능**:
+ *    - 계약 완료 메시지 및 안내 메시지 출력.
+ *    - API를 통해 회원 상세 정보 가져오기.
+ *    - 계약 데이터 초기화 및 화면 전환 기능.
+ */
+
 import {useNavigation, useRoute} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {ScrollView, View} from 'react-native';

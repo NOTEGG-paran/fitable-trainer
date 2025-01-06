@@ -1,3 +1,43 @@
+/**
+ * 1. 프로젝트명: 핏에이블 강사앱
+ * 2. 파일명: EditProfileScreen.js
+ * 3. **설명**:
+ *    - 트레이너의 프로필 정보를 조회하거나 수정할 수 있는 화면.
+ *    - 프로필이 존재하지 않을 경우 새로운 프로필 생성 화면을 표시.
+ *
+ * 4. **주요 로직**:
+ *    - **프로필 정보 조회**:
+ *      - `getTrainersProfileInfo` API를 호출하여 프로필 데이터를 가져옴.
+ *      - 프로필이 존재하는지(`isExistProfile`) 여부를 확인하여 UI 분기 처리.
+ *    - **수정 모드 전환**:
+ *      - 수정 버튼 클릭 시 `isEditMode`를 활성화하여 수정 가능한 UI 표시.
+ *    - **UI 상태에 따른 컴포넌트 렌더링**:
+ *      - 프로필이 존재하고 수정 모드가 아닌 경우 `TrainerInfoGetListGrid` 표시.
+ *      - 수정 모드이거나 프로필이 없는 경우 `TrainerInfoListGrid` 표시.
+ *    - **로딩 처리**:
+ *      - 데이터를 가져오는 동안 로딩 인디케이터를 표시.
+ *
+ * 5. **주요 기능**:
+ *    - **프로필 조회**:
+ *      - 트레이너의 프로필 데이터를 조회하여 화면에 표시.
+ *    - **프로필 수정**:
+ *      - 수정 버튼 클릭 후 프로필 데이터를 수정할 수 있는 UI 제공.
+ *    - **UI 분기 처리**:
+ *      - 프로필이 존재하지 않을 경우 새로운 프로필 생성 화면 표시.
+ *    - **로딩 상태 처리**:
+ *      - 데이터 로드 중 로딩 스피너 표시.
+ *
+ * 6. **코드 주요 포인트**:
+ *    - **Recoil 상태 관리**:
+ *      - `profileState`를 사용해 프로필 데이터를 전역 상태로 관리.
+ *    - **API 호출**:
+ *      - `getTrainersProfileInfo` API를 통해 프로필 데이터를 서버에서 가져옴.
+ *    - **조건부 렌더링**:
+ *      - `isExistProfile` 및 `isEditMode` 상태에 따라 다른 UI를 렌더링.
+ *    - **useFocusEffect 사용**:
+ *      - 화면이 포커스될 때마다 프로필 데이터를 다시 로드.
+ */
+
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState ,useCallback} from 'react';
@@ -12,7 +52,6 @@ import { COLORS } from '../../constants/color';
 import TrainerInfoGetListGrid from '../../components/grid/TrainerInfoGetListGrid';
 import { useFocusEffect } from '@react-navigation/native';
 import { Alert,ActivityIndicator, View  } from 'react-native';
-import TrainerProfileGrid from '../../components/grid/TrainerProfileGrid';
 import { useRecoilState } from 'recoil';
 import { profileState } from '../../store/atom';
 
@@ -89,7 +128,6 @@ function EditProfileScreen(props) {
             }
             </HeaderGrid>
       
-            {/* <TrainerProfileGrid /> */}
             {
                 !isEditMode && isExistProfile ?
                 <TrainerInfoGetListGrid profileInfo={profileInfo}/> :

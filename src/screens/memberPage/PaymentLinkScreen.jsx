@@ -1,3 +1,22 @@
+/**
+ * 1. **프로젝트명**: 핏에이블 강사앱
+ * 2. **파일명**: PaymentLinkScreen.js
+ * 3. **설명**:
+ *    - 선택된 멤버에 대해 결제 링크를 생성하고 전송할 수 있는 화면입니다. 사용자는 티켓 정보를 입력하고 링크를 전송할 수 있습니다.
+ * 4. **주요 로직**:
+ *    - **결제 티켓 추가**:
+ *      - 사용자가 결제 티켓을 추가할 수 있도록 데이터를 초기화하고 상태를 업데이트합니다.
+ *    - **결제 링크 전송**:
+ *      - 입력된 데이터를 API로 전송하여 결제 링크를 생성하고 사용자에게 전송합니다.
+ *    - **버튼 활성화 상태**:
+ *      - 티켓의 필수 입력값(endDate, salePrice, periodType)이 모두 입력된 경우에만 전송 버튼 활성화.
+ * 5. **주요 기능**:
+ *    - 멤버 및 티켓 정보 입력 기능.
+ *    - 결제 링크 생성 및 전송 기능.
+ *    - 결제 티켓 추가 및 입력 상태 관리.
+ */
+
+
 import {MainContainer} from '../../style/gridStyled'
 import GobackGrid from '../../components/grid/GobackGrid';
 import { useNavigation } from '@react-navigation/native';

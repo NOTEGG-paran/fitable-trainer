@@ -7,7 +7,7 @@ export const InfoEditInput = forwardRef(({
     onSubmitEditing, value, 
     onChangeText, placeholder, isFocused,
     onBlur, title, hasError, maxLength,onFocus
-  }, ref) => { // ref는 여기에 정확하게 위치합니다.
+  }, ref) => {
     const isNameInput = title === '이름';
 
     return (
@@ -15,7 +15,7 @@ export const InfoEditInput = forwardRef(({
         <InfoTitleText>{title}</InfoTitleText>
         <InfoTextInputContainer hasError={hasError}>
           <InfoTextInput
-            ref={ref} // ref를 이렇게 연결합니다.
+            ref={ref}
             maxLength={maxLength}
             value={value}
             onFocus={onFocus}

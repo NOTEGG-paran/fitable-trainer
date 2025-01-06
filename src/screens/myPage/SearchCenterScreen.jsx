@@ -1,3 +1,42 @@
+/**
+ * 1. 프로젝트명: 핏에이블 강사앱
+ * 2. 파일명: SearchCenterScreen.js
+ * 3. **설명**:
+ *    - 사용자가 연동 가능한 센터를 검색하고 추가할 수 있는 화면.
+ *    - 검색된 센터 목록에서 선택하여 연동 센터에 추가 가능.
+ *
+ * 4. **주요 로직**:
+ *    - **센터 검색**:
+ *      - `searchCenterList` API 호출로 사용자가 입력한 검색어에 해당하는 센터 목록을 가져옴.
+ *      - 검색 결과를 `searchData` 상태로 저장.
+ *    - **센터 추가**:
+ *      - 사용자가 선택한 센터를 `addCenterList` API로 연동 센터에 추가.
+ *      - 성공 시 알림 메시지를 표시하고 센터 목록을 업데이트.
+ *    - **연동 센터 자동 설정**:
+ *      - 연동 센터 목록 길이에 따라 `centerId` 상태 자동 설정.
+ *      - 연동 센터가 하나만 남은 경우 자동으로 해당 센터를 선택.
+ *    - **기본 데이터 로드**:
+ *      - `recentDataList` 함수로 초기 화면에 연동 가능한 센터 목록을 불러옴.
+ *
+ * 5. **주요 기능**:
+ *    - **검색 기능**:
+ *      - 사용자가 입력한 검색어에 따라 센터 목록 필터링.
+ *    - **센터 추가 기능**:
+ *      - 선택한 센터를 연동 센터 목록에 추가.
+ *    - **UI 상태 관리**:
+ *      - 검색 중 또는 데이터 로드 중 로딩 상태 표시.
+ *    - **조건부 렌더링**:
+ *      - 검색 결과가 없을 경우 기본 메시지 표시.
+ *    - **실시간 검색 및 상태 업데이트**:
+ *      - 검색 입력값 변경 시 `isTyping` 상태를 활용해 UI 반응.
+ *
+ * 6. **코드 주요 포인트**:
+ *    - **Recoil 상태 관리**:
+ *      - `centerListState`와 `centerIdState`를 사용해 연동 센터 목록과 선택된 센터 ID를 관리.
+ *    - **API 호출**:
+ *      - `searchCenterList` 및 `addCenterList` API로 센터 검색 및 추가 처리.
+ */
+
 import { useNavigation } from '@react-navigation/native';
 import {MainContainer} from '../../style/gridStyled'
 import GobackGrid from '../../components/grid/GobackGrid';

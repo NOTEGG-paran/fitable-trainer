@@ -1,3 +1,30 @@
+/**
+ * 1. **프로젝트명**: 핏에이블 강사앱
+ * 2. **파일명**: SaveContractScreen.js
+ * 3. **설명**:
+ *    - 계약서 저장 화면으로, 계약서와 관련된 영수증 데이터를 추가, 수정, 삭제할 수 있는 기능을 제공합니다.
+ * 4. **주요 로직**:
+ *    - **계약서 템플릿 데이터 가져오기**:
+ *      - `getIntergrateTemplate` API를 통해 템플릿 데이터 호출.
+ *    - **계약서 저장**:
+ *      - `postNewIntegrateContract` API를 호출해 계약서 및 영수증 데이터를 저장.
+ *    - **영수증 추가**:
+ *      - 새로운 영수증 데이터를 추가하는 화면으로 이동.
+ *    - **영수증 수정**:
+ *      - 기존 영수증 데이터를 수정하는 화면으로 이동.
+ *    - **영수증 삭제**:
+ *      - 선택된 영수증 데이터를 삭제하며, 삭제 전 사용자 확인 팝업 표시.
+ *    - **버튼 활성화**:
+ *      - `isSubmitting` 상태를 활용해 중복 요청 방지.
+ * 5. **주요 기능**:
+ *    - 계약서에 필요한 영수증 데이터 추가 및 관리.
+ *    - 영수증 데이터가 없을 경우 안내 메시지 표시.
+ *    - 영수증 추가/수정/삭제 기능 제공.
+ *    - 계약서 저장 후 성공 시 `ContractSuccess` 화면으로 이동.
+ *    - 에러 처리 및 알림 제공.
+ */
+
+
 import React, {useEffect, useState} from 'react';
 import {MainContainer} from '../../style/gridStyled';
 import GobackGrid from '../../components/grid/GobackGrid';

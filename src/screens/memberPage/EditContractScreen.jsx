@@ -1,3 +1,22 @@
+/**
+ * 1. **프로젝트명**: 핏에이블 강사앱
+ * 2. **파일명**: EditContractScreen.js
+ * 3. **설명**:
+ *    - 계약서 작성 중 선택된 이용권 정보를 수정하는 화면입니다.
+ *    - 이용권 상품명, 기간, 횟수, 결제 수단, 금액 등의 세부 정보를 입력 및 수정할 수 있습니다.
+ * 4. **주요 로직**:
+ *    - **이용권 초기화**:
+ *      - `useEffect`로 `selectedTickets` 데이터를 로드하며, 횟수(`time`)가 null인 경우 표시를 '-'로 설정.
+ *    - **이용권 세부 정보 업데이트**:
+ *      - 사용자가 입력한 데이터를 `updatedContractTicket` 배열에 반영하여 상태 관리.
+ *    - **유효성 검사**:
+ *      - 모든 필수 항목(기간, 상품명, 횟수, 결제수단, 금액)이 올바르게 입력되었는지 확인 후 버튼 활성화 여부 결정.
+ * 5. **주요 기능**:
+ *    - 선택된 이용권 정보 수정.
+ *    - 유효하지 않은 입력값의 경우 "다음" 버튼 비활성화.
+ *    - 데이터 수정 후 다음 단계(계약 동의 화면)로 이동.
+ */
+
 import {useNavigation, useRoute} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {ScrollView, TextInput, View,Platform,KeyboardAvoidingView} from 'react-native';

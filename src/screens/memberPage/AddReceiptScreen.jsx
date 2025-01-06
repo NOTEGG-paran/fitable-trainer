@@ -1,3 +1,26 @@
+/**
+ * 1. **프로젝트명**: 핏에이블 강사앱
+ * 2. **파일명**: AddReceiptScreen.js
+ * 3. **설명**:
+ *    - 영수증 추가 및 수정 화면. 결제수단, 금액, 발행 정보 등 영수증 관련 데이터를 입력받고 저장합니다.
+ * 4. **주요 로직**:
+ *    - **데이터 초기화**:
+ *      - `useEffect`를 활용해 영수증 수정 모드인지 확인하고, 초기 데이터를 설정합니다.
+ *    - **유효성 검증**:
+ *      - 입력된 데이터의 유효성을 검사하여 버튼 활성화 상태를 관리합니다.
+ *    - **결제수단별 처리**:
+ *      - 선택된 결제수단에 따라 적절한 UI 컴포넌트와 상태를 관리합니다.
+ *    - **영수증 저장**:
+ *      - 입력된 데이터를 기반으로 새로운 영수증 데이터를 생성하거나 기존 데이터를 수정합니다.
+ * 5. **주요 기능**:
+ *    - 결제수단 선택 및 변경.
+ *    - 결제 금액 입력 및 유효성 검증.
+ *    - 현금영수증 발행 정보 입력.
+ *    - 카드 정보 및 계좌이체 정보 입력.
+ *    - 입력된 데이터 저장 및 내역으로 이동.
+ */
+
+
 import React, { useState,useEffect } from 'react';
 import { COLORS } from '../../constants/color';
 import {MainContainer} from '../../style/gridStyled';
@@ -42,30 +65,7 @@ function AddReceiptScreen(props) {
     const [centerId, setCenterId] = useRecoilState(centerIdState);
     const [contract, setContract] = useRecoilState(contractState);
     const {memberId} = route.params;
-    // // 결제 수단 타입
-    // const [paymentType, setPaymentType] = useState('CASH')
-    // // 결제 금액
-    // const [price, setPrice] = useState('')
-    // // 발행 유무
-    // const [isPublishCashReceipt ,setIsPublishCashReceipt] = useState(false)
-    // // 발행 현금 타입
-    // const [cashReceiptType, setCashReceiptType] = useState('PERSONAL')
-    // // 공제 번호
-    // const [cashReceiptNumber, setCashReceiptNumber] = useState(null)
-    // // 승인번호
-    // const [authCode, setAuthCode] = useState(null)
-    // // 은행 선택
-    // const [bankName, setBankName] = useState(null);
-    // // 카드 선택
-    // const [cardName, setCardName] = useState(null)
-    // // 카드번호
-    // const [cardNumber, setCardNumber] = useState(null);
-    // // 이미지
-    // const [img, setImg] = useState(null);
-    // // 할부
-    // const [cardQuota, setCardQuota] = useState('1');
-    // // 보낸사람
-    // const [senderName, setSenderName] = useState(null);
+ 
 
   // 결제 수단 타입
   const [paymentType, setPaymentType] = useState(receipt ? receipt.paymentType : 'CASH');

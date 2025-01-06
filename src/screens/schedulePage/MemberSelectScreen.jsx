@@ -1,3 +1,45 @@
+/**
+ * 1. 프로젝트명: 핏에이블 강사앱
+ * 2. 파일명: MemberSelectScreen.js
+ * 3. **설명**:
+ *    - 회원 목록을 불러와 선택할 수 있는 화면.
+ *    - 수업 및 클래스와 연동된 회원 데이터를 가져오고, 선택된 회원으로 추가적인 작업 수행.
+ *
+ * 4. **주요 로직**:
+ *    - **회원 데이터 로드**:
+ *      - `getLessonReservationMembers` 또는 `getAssignableMembers` API를 호출하여 회원 데이터 로드.
+ *      - 페이징 처리로 추가 회원 데이터를 동적으로 가져옴.
+ *    - **회원 선택**:
+ *      - 사용자가 회원을 선택하면 관련 데이터와 함께 다음 화면으로 이동.
+ *      - `routerType`에 따라 처리 로직 분기.
+ *    - **회원 예약**:
+ *      - `postLessonReservation` API를 호출하여 선택된 회원을 수업에 예약.
+ *      - 예약 완료 또는 에러 발생 시 사용자에게 Alert로 알림.
+ *
+ * 5. **주요 기능**:
+ *    - **회원 목록 표시**:
+ *      - API에서 가져온 회원 데이터를 FlatList로 표시.
+ *      - 데이터가 없을 경우 '회원 목록이 없습니다' 메시지 출력.
+ *    - **페이징 처리**:
+ *      - `onEndReached`를 통해 추가 데이터를 불러와 무한 스크롤 구현.
+ *    - **회원 선택 및 처리**:
+ *      - 사용자가 특정 회원을 선택하면 예약하거나 다음 화면으로 데이터 전달.
+ *    - **로딩 상태 표시**:
+ *      - 데이터를 가져오는 동안 `ActivityIndicator`로 로딩 상태 표시.
+ *
+ * 6. **코드 주요 포인트**:
+ *    - **Reusability**:
+ *      - `routerType`에 따라 분기 처리를 통해 다양한 호출 로직 지원.
+ *    - **API 호출**:
+ *      - `getLessonReservationMembers`, `getAssignableMembers`, `postLessonReservation` API 호출로 데이터 처리.
+ *    - **FlatList 및 페이징**:
+ *      - FlatList의 `onEndReached`와 `ListFooterComponent`로 부드러운 페이징 구현.
+ *    - **에러 처리**:
+ *      - API 호출 실패 및 예외 상황에 대한 알림 제공.
+ *    - **메모이제이션**:
+ *      - `useCallback`을 활용하여 불필요한 재렌더링 방지.
+ */
+
 import React from 'react';
 import styled from 'styled-components/native';
 import { COLORS } from '../../constants/color';

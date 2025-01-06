@@ -1,3 +1,46 @@
+/**
+ * 1. 프로젝트명: 핏에이블 강사앱
+ * 2. 파일명: CreateClassScreen.js
+ * 3. **설명**:
+ *    - 그룹 및 1:1 수업 등록을 위한 화면.
+ *    - 수업명, 시간, 날짜, 장소, 강사 등의 정보를 입력받아 수업을 생성.
+ *    - 선택한 수업 유형(그룹/1:1)과 일정 반복 여부에 따라 데이터 처리.
+ *
+ * 4. **주요 로직**:
+ *    - **수업 데이터 로드**:
+ *      - API 호출을 통해 수업명, 종목, 장소, 강사 정보를 가져옴.
+ *    - **수업 데이터 상태 관리**:
+ *      - `classData`를 기반으로 사용자가 입력한 데이터를 저장하고 업데이트.
+ *    - **등록 요청**:
+ *      - `registerClass` API를 호출하여 수업 데이터를 서버에 저장.
+ *      - 단일 일정(SINGLE)과 반복 일정(MULTIPLE)에 따라 데이터를 다르게 처리.
+ *    - **유효성 검사**:
+ *      - 시간, 날짜, 강사 정보 등의 필수 입력값에 대한 유효성 검사 수행.
+ *      - 시작 시간이 종료 시간보다 늦을 경우 오류 처리.
+ *    - **회원 배정**:
+ *      - API 호출로 배정 가능한 회원 목록을 가져오고, 회원 선택 화면으로 이동.
+ *
+ * 5. **주요 기능**:
+ *    - **그룹 및 개인 수업 등록**:
+ *      - 단일 일정(SINGLE) 및 반복 일정(MULTIPLE) 모두 지원.
+ *    - **수업 데이터 입력**:
+ *      - 수업명, 날짜, 시간, 장소, 강사 정보를 사용자가 입력.
+ *    - **회원 배정**:
+ *      - 1:1 수업의 경우 회원을 배정하거나 삭제.
+ *    - **등록 완료 모달 표시**:
+ *      - 수업 등록 성공 시 모달을 통해 사용자에게 알림.
+ *
+ * 6. **코드 주요 포인트**:
+ *    - **Recoil 상태 관리**:
+ *      - `centerIdState`를 사용해 현재 센터 ID 및 기타 상태 관리.
+ *    - **API 호출**:
+ *      - `getClassNames`, `getClassItem`, `getClassPlaces`, `getClassTrainer`, `registerClass` 등을 통해 데이터 처리.
+ *    - **Styled-Components 사용**:
+ *      - 화면 구성 요소의 스타일을 선언적으로 정의.
+ *    - **실시간 유효성 검사**:
+ *      - 필수 입력값 및 일정 유효성을 검사하여 버튼 활성화 상태를 동적으로 변경.
+ */
+
 import styled from 'styled-components/native';
 import {COLORS} from '../../constants/color'
 import {MainContainer} from '../../style/gridStyled'
@@ -19,11 +62,9 @@ import { useRecoilState } from 'recoil';
 import {getClassNames, getClassItem, getClassPlaces ,registerClass, getClassTrainer,getAssignableMembers} from '../../api/classApi';
 import ClassTimeSelectCard from '../../components/card/ClassTimeSelectCard';
 import RegisteredModal from '../../components/modal/RegisteredModal';
-import {formatDate} from '../../utils/CustomUtils';
+
 import ClassDateCheckBtn from '../../components/button/ClassDateCheckBtn';
 import FastImage from 'react-native-fast-image';
-import TrainerProfileGrid from '../../components/grid/TrainerProfileGrid';
-import TestCardsPicker from '../../components/card/TestCardsPicker';
 import LoadingModal from '../../components/modal/LoadingModal';
 function CreateClassScreen(props) {
 
@@ -692,14 +733,7 @@ const grupPersActive = (postData) => {
                     type==="PERSONAL" &&
                     (<CreateClassSelectCard selectState={selectTrainer} setSelectState={setSelectTrainer} state={trainers} imgIcon={trainerIcon} type="trainer" setState={setClassTrainer} updateClassData={updateClassData}>강사</CreateClassSelectCard>)
                    }
-                    {/* 수정중 */}
-                    {/* {
-                        selectedCheckBox === 'SINGLE' && 
-                        <TestCardsPicker 
-                        startTime={startTime}  
-                        endTime={endTime}
-                        setStartTime={setStartTime} setEndTime={setEndTime} imgIcon={clockIcon}>시간</TestCardsPicker> 
-                    } */}
+
                 
                     {
                         selectedCheckBox === 'SINGLE' &&  <ClassTimeSelectCard  

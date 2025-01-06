@@ -1,3 +1,60 @@
+/**
+ * 1. 프로젝트명: 핏에이블 강사앱
+ * 2. 파일명: App.jsx
+ * 3. **설명**:
+ *    - 애플리케이션의 메인 엔트리 포인트.
+ *    - FCM 푸시 알림 설정, 앱 버전 체크, 스플래시 화면, 버전 업데이트 모달 관리.
+ *
+ * 4. **주요 로직**:
+ *    - **푸시 알림 설정**:
+ *      - FCM 토큰 관리 및 알림 권한 요청.
+ *      - 알림 채널 생성 및 알림 수신 처리.
+ *    - **앱 버전 체크**:
+ *      - 서버에서 최신 버전 정보 확인.
+ *      - 현재 앱 버전과 비교하여 업데이트 필요 여부 판단.
+ *    - **스플래시 화면**:
+ *      - 앱 실행 시 2초간 표시 후 메인 화면 진입.
+ *    - **버전 업데이트 모달**:
+ *      - 업데이트가 필요할 경우 모달 표시.
+ *      - 모달에서 앱스토어/플레이스토어로 이동.
+ *
+ * 5. **주요 기능**:
+ *    - **푸시 알림 설정**:
+ *      - `requestUserPermission`: 알림 권한 요청.
+ *      - `checkNotificationPermissionAndRedirect`: 알림 권한 미허용 시 설정 화면 이동 안내.
+ *      - `configureNotificationChannel`: 푸시 알림 채널 생성.
+ *      - `configureNotifications`: 푸시 알림 수신 및 처리.
+ *    - **앱 버전 체크**:
+ *      - `getAppVersionCheck`: 서버에서 최신 버전 정보 가져오기.
+ *      - `compareVersions`: 현재 버전과 서버 버전 비교.
+ *    - **스플래시 화면**:
+ *      - `showSplash` 상태로 스플래시 화면 표시 제어.
+ *    - **버전 업데이트 모달**:
+ *      - `showModal` 상태로 업데이트 필요 시 모달 표시.
+ *      - `openStore`: 앱스토어/플레이스토어로 이동.
+ *
+ * 6. **주요 상태 및 로직**:
+ *    - **상태**:
+ *      - `fcmToken`: FCM 토큰 관리.
+ *      - `showSplash`: 스플래시 화면 표시 여부.
+ *      - `showModal`: 버전 업데이트 모달 표시 여부.
+ *      - `alertText`: 업데이트 안내 메시지.
+ *    - **로직**:
+ *      - `checkMyAppFn`: 앱 버전 체크 후 업데이트 여부 결정.
+ *      - `handleNotification`: 알림 수신 시 UI 업데이트.
+ *      - `openStore`: 업데이트 필요 시 스토어 이동.
+ *
+ *
+ * 7. **코드 주요 포인트**:
+ *    - **알림 권한 요청**:
+ *      - Android 및 iOS에서 알림 권한 요청 로직 분리.
+ *    - **앱 버전 체크**:
+ *      - `compareVersions`로 버전 비교 및 업데이트 여부 판단.
+ *    - **알림 처리**:
+ *      - `onMessage`로 알림 수신 시 로컬 알림 생성.
+ */
+
+
 import React, { useEffect, useState } from 'react';
 import AppInner from './AppInner';
 import { RecoilRoot } from 'recoil';

@@ -1,3 +1,26 @@
+/**
+ * 1. **프로젝트명**: 핏에이블 강사앱
+ * 2. **파일명**: SignContractScreen.js
+ * 3. **설명**:
+ *    - 계약서 작성 화면으로, 서명 입력 및 검증 후 계약서를 저장하거나 영수증을 추가할 수 있는 기능을 제공합니다.
+ * 4. **주요 로직**:
+ *    - **계약서 템플릿 호출**:
+ *      - `getIntergrateTemplate` API를 호출해 계약서 템플릿 및 서명 필요 여부를 확인.
+ *    - **센터 서명 데이터 호출**:
+ *      - `getCenterSign` API를 호출하여 센터 서명 데이터를 불러오고 `Recoil` 상태로 관리.
+ *    - **서명 저장 및 계약서 제출**:
+ *      - `postNewIntegrateContract` API를 호출하여 서명 데이터 및 계약서 내용을 저장.
+ *    - **서명 검증**:
+ *      - 회원, 강사, 센터 서명이 필요한 경우 해당 서명이 입력되었는지 검증.
+ * 5. **주요 기능**:
+ *    - 회원, 강사, 센터 서명을 입력 및 관리.
+ *    - 서명 입력 후 계약서 저장 가능.
+ *    - 조건부로 영수증 추가 기능 제공.
+ *    - 각 서명에 대해 입력 화면으로 이동 및 검증 수행.
+ *    - 조건을 만족하지 않을 경우 버튼 비활성화.
+ */
+
+
 import {useNavigation, useRoute,useFocusEffect} from '@react-navigation/native';
 import React, {useEffect, useState,useCallback} from 'react';
 import {Alert, ScrollView, View} from 'react-native';

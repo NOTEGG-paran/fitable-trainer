@@ -1,3 +1,22 @@
+
+/**
+ * 1. **프로젝트명**: 핏에이블 강사앱
+ * 2. **파일명**: SignScreen.js
+ * 3. **설명**:
+ *    - 사용자가 서명할 수 있는 화면을 제공합니다. 서명 완료 후 데이터를 Recoil 상태에 저장하고, 이전 화면으로 돌아갑니다.
+ * 4. **주요 로직**:
+ *    - **서명 입력**:
+ *      - 사용자는 서명 입력을 완료하면 데이터를 URI 형식으로 Recoil 상태에 저장합니다.
+ *    - **서명 초기화**:
+ *      - "모두 지우기" 버튼을 통해 현재 입력된 서명을 초기화합니다.
+ *    - **등록 버튼 활성화**:
+ *      - 사용자가 서명을 완료했을 때만 "서명등록" 버튼이 활성화됩니다.
+ * 5. **주요 기능**:
+ *    - 서명 입력 및 초기화 기능.
+ *    - 입력된 서명을 Recoil 상태에 저장.
+ *    - 서명 데이터를 저장하고 화면 이동.
+ */
+
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';

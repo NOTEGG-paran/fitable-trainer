@@ -1,3 +1,41 @@
+/**
+ * 1. 프로젝트명: 핏에이블 강사앱
+ * 2. 파일명: DetailLessonCommonGrid.js
+ * 3. **설명**:
+ *    - 수업 상세 정보를 표시하고, 참가 회원 목록을 보여주는 그리드 컴포넌트.
+ *    - 회원 상세 정보 및 회원 선택 기능 제공.
+ *    - 추가개발용은 DetailLessonCommonGridadd입니다. 이걸로 되어있으니 참고
+ *
+ * 4. **주요 로직**:
+ *    - **수업 상세 정보 표시**:
+ *      - 수업명, 시간, 장소 등의 정보를 `lessonDetail` 객체로 렌더링.
+ *    - **참가 회원 정보**:
+ *      - 참가 회원 목록을 렌더링하고, 회원 클릭 시 상세 정보로 이동.
+ *    - **회원 선택 기능**:
+ *      - "회원 선택" 버튼 클릭 시 회원 목록을 API에서 받아오고, 선택 화면으로 이동.
+ *    - **로딩 처리**:
+ *      - API 호출 중 로딩 상태를 `isLoading` 상태로 관리.
+ *
+ * 5. **주요 기능**:
+ *    - **수업 상세 정보 렌더링**:
+ *      - `lessonDetail` 데이터를 기반으로 수업명, 시간, 장소, 참가 회원 정보 표시.
+ *    - **회원 상세 보기**:
+ *      - 참가 회원 클릭 시 `memberDetailScreen`을 호출하여 회원 상세 화면으로 이동.
+ *    - **회원 선택**:
+ *      - "회원 선택" 버튼 클릭 시 `selectMemberScreen`을 호출하여 회원 선택 화면으로 이동.
+ *    - **로딩 모달 표시**:
+ *      - `LoadingModal` 컴포넌트를 통해 API 호출 중 로딩 상태를 사용자에게 알림.
+ *
+ * 6. **주요 상태 및 로직**:
+ *    - **상태**:
+ *      - `isLoading`: API 호출 중 로딩 상태.
+ *    - **로직**:
+ *      - `selectMemberScreen`: 특정 수업 ID로 참가 가능 회원 목록을 API에서 받아옴.
+ *      - `memberDetailScreen`: 특정 회원 ID로 회원 상세 정보를 API에서 받아옴.
+ *
+ */
+
+
 import styled from 'styled-components/native';
 import { COLORS } from '../../constants/color';
 import { useNavigation } from '@react-navigation/native';
