@@ -1,4 +1,7 @@
 {
-  "name": "fitabletrainer",
-  "displayName": "FIT ABLE 강사용"
+  "name": "fitabletrainer", 
+  "displayName": "FITAMIN 강사용",
+  "ios": {
+    "name": "fitableteacher" 
+  }
 }
