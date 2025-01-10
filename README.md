@@ -76,8 +76,8 @@ DEV_URL=http://101.101.216.168:8080
 
 - React Native 버전 업데이트 시 호환성 확인 필요
 - android/build.gradle 또는 ios/Podfile 수정 시 주의
-- (강사앱만)안드로이드 배포시 app.json name `fitableteacher`변경
-- (강사앱만)ios 배포시 app.json name `fitabletrainer`변경
+- (강사앱만)안드로이드 배포시 app.json name `fitabletrainer`변경
+- (강사앱만)ios 배포시 app.json name `fitableteacher`변경
 
 ## 📄 유지보수 및 주의사항
 
